@@ -42,15 +42,7 @@
           console.log(self.favorites);
         });
 
-        self.datasets = $firebaseArray(self.ref.child('datasets').orderByChild("featured").equalTo(true));
-        self.datasets.$loaded().then(function() {
-          console.log(self.datasets);
-        });
-
-        self.orgs = $firebaseArray(self.ref.child('orgs').orderByKey());
-        self.orgs.$loaded().then(function() {
-          console.log(self.orgs);
-        });
+        
         $mdToast.show(
         $mdToast.simple()
         .content("Hello "+$rootScope.userName+"!")
@@ -66,6 +58,15 @@
       }
     }
     self.ref.onAuth(authDataCallback);
+    self.datasets = $firebaseArray(self.ref.child('datasets').orderByChild("featured").equalTo(true));
+    self.datasets.$loaded().then(function() {
+      console.log(self.datasets);
+    });
+
+    self.orgs = $firebaseArray(self.ref.child('orgs').orderByKey());
+    self.orgs.$loaded().then(function() {
+      console.log(self.orgs);
+    });
 
 
     self.selected     = null;
