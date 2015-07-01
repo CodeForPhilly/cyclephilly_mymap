@@ -177,7 +177,7 @@
       
       angular.forEach(response.features,function(v, key){
         console.log(v);
-        self.geoFire.set(v.properties.kioskId.toString(), [v.geometry.coordinates[0],v.geometry.coordinates[1]]).then(function() {
+        self.bikeFire.set(v.properties.kioskId.toString(), [v.geometry.coordinates[0],v.geometry.coordinates[1]]).then(function() {
           console.log("Provided key has been added to GeoFire");
           self.ref.child("bikeshare").child("kiosks").child(v.properties.kioskId).set(v);
         }, function(error) {
