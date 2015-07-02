@@ -234,15 +234,15 @@
         });
       });
 
-    self.datasets = $firebaseArray(self.ref.child('datasets').orderByChild("featured").equalTo(true));
-    self.datasets.$loaded().then(function() {
-      console.log(self.datasets);
-    });
+    // self.datasets = $firebaseArray(self.ref.child('datasets').orderByChild("featured").equalTo(true));
+    // self.datasets.$loaded().then(function() {
+    //   console.log(self.datasets);
+    // });
 
-    self.orgs = $firebaseArray(self.ref.child('orgs').orderByKey());
-    self.orgs.$loaded().then(function() {
-      console.log(self.orgs);
-    });
+    // self.orgs = $firebaseArray(self.ref.child('orgs').orderByKey());
+    // self.orgs.$loaded().then(function() {
+    //   console.log(self.orgs);
+    // });
 
 
     self.selected     = null;
