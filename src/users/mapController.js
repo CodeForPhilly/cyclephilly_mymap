@@ -92,10 +92,10 @@
             radius: 2
           });
 
-          self.geoQuery.on("key_entered", function(placeId, placeLocation) {
+          var onKeyEnteredRegistration = self.geoQuery.on("key_entered", function(key, location, distance) {
           // Specify that the vehicle has entered this query
-          console.log(placeId);
-          placesInQuery[placeId] = true;
+          console.log(key+" "+distance+" "+location);
+          placesInQuery[key] = true;
           var loc = new google.maps.LatLng(placeLocation[0],placeLocation[1])
           // self.bikeShares[placeId] = new google.maps.Marker({
           //   position: loc,
@@ -172,30 +172,30 @@
     }
     self.ref.onAuth(authDataCallback);
     
-    $http.get('https://api.phila.gov/bike-share-stations/v1')
-    .success(function(response){
-      self.searching = false;
+    // $http.get('https://api.phila.gov/bike-share-stations/v1')
+    // .success(function(response){
+    //   self.searching = false;
       
-      angular.forEach(response.features,function(v, key){
-        console.log(v);
-        self.bikeFire.set(v.properties.kioskId.toString(), [v.geometry.coordinates[0],v.geometry.coordinates[1]]).then(function() {
-          console.log("Provided key has been added to GeoFire");
-          self.ref.child("bikeshare").child("kiosks").child(v.properties.kioskId).set(v);
-        }, function(error) {
-          console.log("Error: " + error);
-        });
-      })
-    })
-    .error(function(data, status, headers, config){
-      self.searching = false;
-      $mdToast.show(
-        $mdToast.simple()
-        .content("An error Occured.")
-        .position('top right')
-        .hideDelay(3000)
-      );
-      console.log(data);
-    });
+    //   angular.forEach(response.features,function(v, key){
+    //     console.log(v);
+    //     self.bikeFire.set(v.properties.kioskId.toString(), [v.geometry.coordinates[0],v.geometry.coordinates[1]]).then(function() {
+    //       console.log("Provided key has been added to GeoFire");
+    //       self.ref.child("bikeshare").child("kiosks").child(v.properties.kioskId).set(v);
+    //     }, function(error) {
+    //       console.log("Error: " + error);
+    //     });
+    //   })
+    // })
+    // .error(function(data, status, headers, config){
+    //   self.searching = false;
+    //   $mdToast.show(
+    //     $mdToast.simple()
+    //     .content("An error Occured.")
+    //     .position('top right')
+    //     .hideDelay(3000)
+    //   );
+    //   console.log(data);
+    // });
 
     self.bikshareKiosks = $firebaseArray(self.ref.child('indego').child("kiosks"));
       self.bikshareKiosks.$loaded().then(function(){
