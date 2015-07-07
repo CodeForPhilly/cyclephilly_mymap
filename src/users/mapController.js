@@ -88,7 +88,7 @@
 
           // Create a new GeoQuery instance
           self.geoQuery = self.bikeFire.query({
-            center: [this.getPosition().lat(),this.getPosition().lng()],
+            center: [this.getPosition().lng(),this.getPosition().lat()],
             radius: 2
           });
 
