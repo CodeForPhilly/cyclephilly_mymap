@@ -65,50 +65,6 @@
     }
     self.center = self.locations["philly"];
 
-    self.geoQuery = self.bikeFire.query({
-            center: [-75.13815149999999,39.9620963],
-            radius: 2
-          });
-
-    self.bikeFire.get("3024").then(function(location) {
-  if (location === null) {
-    console.log("Provided key is not in GeoFire");
-  }
-  else {
-    console.log("Provided key has a location of " + location);
-  }
-}, function(error) {
-  console.log("Error: " + error);
-});
-
-          var onKeyEnteredRegistration = self.geoQuery.on("key_entered", function(key, location, distance) {
-          // Specify that the vehicle has entered this query
-          console.log(key+" "+distance+" "+location);
-          placesInQuery[key] = true;
-          var loc = new google.maps.LatLng(placeLocation[0],placeLocation[1])
-          // self.bikeShares[placeId] = new google.maps.Marker({
-          //   position: loc,
-          //   icon: {
-          //     path: google.maps.SymbolPath.CIRCLE,
-          //     scale: 6,
-          //     fillColor: 'green',
-          //     fillOpacity: 0.1,
-          //     strokeColor: 'yellow',
-          //   strokeOpacity: 0.8,
-          //   strokeWeight:2
-          //   },
-          //   draggable: false,
-          //   map: self.map
-          // });
-          // google.maps.event.addListener(self.bikeShares[placeId], 'click', self.showDetails);
-        });
-        /* Removes vehicle markers from the map when they exit the query */
-        self.geoQuery.on("key_exited", function(placeId, vehicleLocation) {
-          // Get the vehicle from the list of vehicles in the query
-          placeId = placeId.split(":")[1];
-          vm.bikeShares[placeId].setMap(null);
-        });
-
     self.mapCenter = new google.maps.LatLng(self.center[0],self.center[1]);
       var mapOptions = {
         zoom: 16,
@@ -131,7 +87,38 @@
           var placesInQuery = {};
 
           // Create a new GeoQuery instance
-          
+          self.geoQuery = self.bikeFire.query({
+            center: [this.getPosition().lat(),this.getPosition().lng()],
+            radius: 2
+          });
+
+          var onKeyEnteredRegistration = self.geoQuery.on("key_entered", function(key, location, distance) {
+          // Specify that the vehicle has entered this query
+          console.log(key+" "+distance+" "+location);
+          placesInQuery[key] = true;
+          // var loc = new google.maps.LatLng(location[0],location[1])
+          // self.bikeShares[placeId] = new google.maps.Marker({
+          //   position: loc,
+          //   icon: {
+          //     path: google.maps.SymbolPath.CIRCLE,
+          //     scale: 6,
+          //     fillColor: 'green',
+          //     fillOpacity: 0.1,
+          //     strokeColor: 'yellow',
+          //   strokeOpacity: 0.8,
+          //   strokeWeight:2
+          //   },
+          //   draggable: false,
+          //   map: self.map
+          // });
+          // google.maps.event.addListener(self.bikeShares[placeId], 'click', self.showDetails);
+        });
+        /* Removes vehicle markers from the map when they exit the query */
+        self.geoQuery.on("key_exited", function(placeId, vehicleLocation) {
+          // Get the vehicle from the list of vehicles in the query
+          placeId = placeId.split(":")[1];
+          vm.bikeShares[placeId].setMap(null);
+        });
           
           // self.map.fitBounds(this.getBounds());
         });
