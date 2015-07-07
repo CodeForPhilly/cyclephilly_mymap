@@ -65,30 +65,8 @@
     }
     self.center = self.locations["philly"];
 
-    self.mapCenter = new google.maps.LatLng(self.center[0],self.center[1]);
-      var mapOptions = {
-        zoom: 16,
-        center: self.mapCenter,
-        mapTypeId: google.maps.MapTypeId.MAP
-      };
-      if(self.map === undefined){
-        self.map = new google.maps.Map(document.getElementById("map-canvas"),
-          mapOptions);
-
-        self.GeoMarker = new GeolocationMarker();
-        self.GeoMarker.setCircleOptions({fillColor: '#808080'});
-
-        google.maps.event.addListenerOnce(self.GeoMarker, 'position_changed', function() {
-          self.map.setCenter(this.getPosition());
-          /*************/
-          /*  GEOQUERY */
-          /*************/
-          // Keep track of all of the vehicles currently within the query
-          var placesInQuery = {};
-
-          // Create a new GeoQuery instance
-          self.geoQuery = self.bikeFire.query({
-            center: [this.getPosition().lat(),this.getPosition().lng()],
+    self.geoQuery = self.bikeFire.query({
+            center: [39.9620963,-75.13815149999999],
             radius: 2
           });
 
@@ -119,6 +97,30 @@
           placeId = placeId.split(":")[1];
           vm.bikeShares[placeId].setMap(null);
         });
+        
+    self.mapCenter = new google.maps.LatLng(self.center[0],self.center[1]);
+      var mapOptions = {
+        zoom: 16,
+        center: self.mapCenter,
+        mapTypeId: google.maps.MapTypeId.MAP
+      };
+      if(self.map === undefined){
+        self.map = new google.maps.Map(document.getElementById("map-canvas"),
+          mapOptions);
+
+        self.GeoMarker = new GeolocationMarker();
+        self.GeoMarker.setCircleOptions({fillColor: '#808080'});
+
+        google.maps.event.addListenerOnce(self.GeoMarker, 'position_changed', function() {
+          self.map.setCenter(this.getPosition());
+          /*************/
+          /*  GEOQUERY */
+          /*************/
+          // Keep track of all of the vehicles currently within the query
+          var placesInQuery = {};
+
+          // Create a new GeoQuery instance
+          
           
           // self.map.fitBounds(this.getBounds());
         });
