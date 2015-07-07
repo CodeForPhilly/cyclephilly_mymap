@@ -70,6 +70,17 @@
             radius: 2
           });
 
+    self.bikeFire.get("3024").then(function(location) {
+  if (location === null) {
+    console.log("Provided key is not in GeoFire");
+  }
+  else {
+    console.log("Provided key has a location of " + location);
+  }
+}, function(error) {
+  console.log("Error: " + error);
+});
+
           var onKeyEnteredRegistration = self.geoQuery.on("key_entered", function(key, location, distance) {
           // Specify that the vehicle has entered this query
           console.log(key+" "+distance+" "+location);
@@ -97,7 +108,7 @@
           placeId = placeId.split(":")[1];
           vm.bikeShares[placeId].setMap(null);
         });
-        
+
     self.mapCenter = new google.maps.LatLng(self.center[0],self.center[1]);
       var mapOptions = {
         zoom: 16,
