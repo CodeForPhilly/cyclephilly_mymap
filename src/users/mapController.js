@@ -66,7 +66,7 @@
     self.center = self.locations["philly"];
 
     self.geoQuery = self.bikeFire.query({
-            center: [39.9620963,-75.13815149999999],
+            center: [-75.13815149999999,39.9620963],
             radius: 2
           });
 
