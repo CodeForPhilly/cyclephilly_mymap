@@ -3,7 +3,7 @@
   angular
        .module('users')
        .controller('UserController', [
-          'userService', '$mdSidenav', '$mdToast','$mdBottomSheet', '$log', '$q','$rootScope','$firebaseArray','$firebaseObject','$http',
+          'userService', '$mdSidenav', '$mdToast','$mdBottomSheet', '$log', '$q','$rootScope','$scope','$firebaseArray','$firebaseObject','$http',
           UserController
        ]);
 
@@ -14,7 +14,7 @@
    * @param avatarsService
    * @constructor
    */
-  function UserController( userService, $mdSidenav,$mdToast, $mdBottomSheet, $log, $q,$rootScope,$firebaseArray,$firebaseObject,$http) {
+  function UserController( userService, $mdSidenav,$mdToast, $mdBottomSheet, $log, $q,$rootScope,$scope,$firebaseArray,$firebaseObject,$http) {
     var self = this;
     self.mapLoading = true;
     self.ref = new Firebase("https://phl.firebaseio.com");
@@ -27,6 +27,22 @@
     self.locations = {
       "philly": [39.9620048,-75.1695314]
     };
+
+    self.dialer = {
+      topDirections: ['left', 'up'],
+      bottomDirections: ['down', 'right'],
+      isOpen: false,
+      availableModes: ['md-fling', 'md-scale'],
+      selectedMode: 'md-fling',
+      availableDirections: ['up', 'down', 'left', 'right'],
+      selectedDirection: 'up'
+    };
+
+    self.people = [
+    { name: 'Janet Perkins', img: 'img/100-0.jpeg', newMessage: true },
+    { name: 'Mary Johnson', img: 'img/100-1.jpeg', newMessage: false },
+    { name: 'Peter Carlsson', img: 'img/100-2.jpeg', newMessage: false }
+  ];
 
     self.test=function($event){
       $mdToast.show(
@@ -265,7 +281,7 @@
     
 
     self.bikeLayers=[
-    {name:"Bike Share",enabled:true},
+    {name:"Ride Indego",enabled:true},
     {name:"Bike Racks",enabled:false},
     {name:"Bike Routes",enabled:false},
     ]

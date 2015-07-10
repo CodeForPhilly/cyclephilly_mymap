@@ -145,3 +145,16 @@ span.name {
   font-size:1.1em;
   padding-left:5px;
 }
+
+.text-capitalize {
+  text-transform: capitalize; }
+.md-fab:hover, .md-fab.md-focused {
+  background-color: #000 !important; }
+p.note {
+  font-size: 1.2rem; }
+.lock-size {
+  
+  position: absolute;
+  bottom: 17px;
+  right: 17px;
+  z-index: 33000; }
