@@ -217,16 +217,31 @@
       self.bikshareKiosks.$loaded().then(function(){
         
         angular.forEach(self.bikshareKiosks, function(value, key) {
-          console.log(value.l);
+          console.log(value);
+          var fillcolor
+          var fillopacity;
+          if(value.properties.bikesAvailable == 0){
+            fillcolor = "#FFFFFF";
+            fillopacity= 0.7;
+          }else{
+            if (value.properties.bikesAvailable <= 4) {
+              fillcolor = "#a2d40a";
+              fillopacity= 0.4;
+            }else{
+              fillcolor = "#002369"
+              fillopacity= 0.4;
+            }
+            
+          }
           var loc = new google.maps.LatLng(value.geometry.coordinates[1],value.geometry.coordinates[0])
           self.bikeShares[value.$id] = new google.maps.Marker({
             position: loc,
             icon: {
               path: google.maps.SymbolPath.CIRCLE,
               scale: 6,
-              fillColor: 'blue',
-              fillOpacity: 0.5,
-              strokeColor: 'blue',
+              fillColor: fillcolor,
+              fillOpacity: fillopacity,
+              strokeColor: '#002369',
             strokeOpacity: 0.8,
             strokeWeight:2
             },

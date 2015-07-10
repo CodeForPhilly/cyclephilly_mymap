@@ -72,7 +72,7 @@
 
     <md-subheader class="md-no-sticky">Bike Layers</md-subheader>
   <md-list-item ng-click="navigateTo(setting.extraScreen, $event)" ng-repeat="layer in ul.bikeLayers">
-  <md-switch class="md-secondary" ng-model="layer.enabled"></md-switch>
+  <md-switch class="md-primary" ng-model="layer.enabled"></md-switch>
     <md-icon md-svg-icon="{{layer.icon}}"></md-icon>
     <p> {{ layer.name }} </p>
     
@@ -131,7 +131,7 @@
             <span style="padding-left:5px"> 12</span>
         </md-button>
         <span flex="10"></span>
-        <md-button class="md-fab md-mini" aria-label="Eat cake">
+        <md-button class="md-fab md-mini md-primary md-hue-2" aria-label="Eat cake">
             <span style="padding-left:5px"> 12</span>
         </md-button>
             <!-- <md-icon md-font-icon="icon-mode_comment"
@@ -214,13 +214,13 @@
                       .icon("phone"      , "./assets/svg/phone.svg"       , 512);
 
                       $mdThemingProvider.theme('default')
-                          .primaryPalette('indigo', {
+                          .primaryPalette('blue', {
                             'default': '900', // by default use shade 400 from the pink palette for primary intentions
                             'hue-1': '100', // use shade 100 for the <code>md-hue-1</code> class
                             'hue-2': '600', // use shade 600 for the <code>md-hue-2</code> class
                             'hue-3': 'A100' // use shade A100 for the <code>md-hue-3</code> class
                           })
-                          .accentPalette('red');
+                          .accentPalette('grey');
 
               });
 
