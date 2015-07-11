@@ -128,13 +128,13 @@
     <h3 layout-margin>Ride Indego - Nearby Stations</h3>
   </div>
     <md-content layout="row" layout-align="start start" layout-margin class="md-whiteframe-z3" style="padding-bottom:10px;margin-bottom:5px;height:180px" layout-fill>
-<md-list style="min-width:370px" >
+<md-list style="min-width:420px" >
 
-  <md-list-item class="md-2-line md-no-sticky" ng-repeat="person in ul.people">
-    <img alt="{{ person.name }}" ng-src="assets/indego-light.png" class="md-avatar" />
+  <md-list-item class="md-2-line md-no-sticky" ng-repeat="station in ul.sortedIndego">
+    <img alt="{{ station.name }}" ng-src="assets/indego-light.png" class="md-avatar" />
     <span layout-padding>
       <br>
-      Front and Spring Garden
+      {{station.properties.name}}
     </span>
     <span flex="5"></span>
         <div class="md-list-item-text">
@@ -146,11 +146,11 @@
                  </div>
           <div layout="row" layout-fill>
             <md-button class="md-fab md-mini md-primary" aria-label="Eat cake">
-            <span style="padding-left:5px"> 12</span>
+            <span style="padding-left:5px"> {{station.properties.bikesAvailable}}</span>
         </md-button>
-        <span flex="10"></span>
+        <span flex="20"></span>
         <md-button class="md-fab md-mini md-accent md-hue-2" aria-label="Eat cake">
-            <span style="padding-left:5px"> 12</span>
+            <span style="padding-left:5px"> {{station.properties.docksAvailable}}</span>
         </md-button>
             <!-- <md-icon md-font-icon="icon-mode_comment"
                    ng-style="{'font-size': '24px', height: '24px'}"
