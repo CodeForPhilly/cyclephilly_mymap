@@ -29,6 +29,36 @@
     self.locations = {
       "philly": [39.9620048,-75.1695314]
     };
+    $scope.sortedIndego = [
+  {
+    "key": "0",
+    "distance": 0.0,
+    "location": [
+      -75.13983,
+      39.96062
+    ],
+    "properties": {
+      "addressCity": "Philadelphia",
+      "addressState": "PA",
+      "addressStreet": "117 Spring Garden St.",
+      "addressZipCode": "19123",
+      "bikesAvailable": "--",
+      "closeTime": "23:58:00",
+      "docksAvailable": "--",
+      "isEventBased": false,
+      "isVirtual": false,
+      "kioskId": 0,
+      "kioskPublicStatus": "Active",
+      "name": "Loading nearest stations...",
+      "openTime": "00:02:00",
+      "publicText": "",
+      "timeZone": "Eastern Standard Time",
+      "totalDocks": 19,
+      "trikesAvailable": 0
+    },
+    "$$hashKey": "object:37"
+  }
+];
 
     self.dialer = {
       topDirections: ['left', 'up'],
