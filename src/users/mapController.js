@@ -295,11 +295,12 @@
     self.numberBuffer = '';
     
 
-    self.bikeLayers=[
-    {name:"Ride Indego",enabled:true},
-    {name:"Bike Racks",enabled:false},
-    {name:"Bike Routes",enabled:false},
-    ]
+    self.layers={
+    indego:{name:"Ride Indego",enabled:true,color:"md-primary"},
+    racks:{name:"Bike Racks",enabled:false,color:"md-accent"},
+    routes:{name:"Bike Routes",enabled:true,color:"md-primary md-hue-2"},
+    }
+
 
     self.toggleMode = function(item){
       self.bikeColor = "rgb(70, 239, 245)";

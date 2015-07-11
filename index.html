@@ -71,12 +71,28 @@
     <md-divider></md-divider>
 
     <md-subheader class="md-no-sticky">Bike Layers</md-subheader>
-  <md-list-item ng-click="navigateTo(setting.extraScreen, $event)" ng-repeat="layer in ul.bikeLayers">
-  <md-switch class="md-primary" ng-model="layer.enabled"></md-switch>
-    <md-icon md-svg-icon="{{layer.icon}}"></md-icon>
-    <p> {{ layer.name }} </p>
+
+  <md-list-item  ng-click="navigateTo(setting.extraScreen, $event)">
+  <md-switch  ng-model="ul.layers.indego.enabled" class="md-primary"></md-switch>
+    <md-icon md-svg-icon="{{ul.layers.indego.icon}}"></md-icon>
+    <p> {{ ul.layers.indego.name }} </p>
     
   </md-list-item>
+
+  <md-list-item  ng-click="navigateTo(setting.extraScreen, $event)">
+  <md-switch  ng-model="ul.layers.racks.enabled" class="md-accent"></md-switch>
+    <md-icon md-svg-icon="{{ul.layers.racks.icon}}"></md-icon>
+    <p> {{ ul.layers.racks.name }} </p>
+    
+  </md-list-item>
+
+  <md-list-item  ng-click="navigateTo(setting.extraScreen, $event)">
+  <md-switch  ng-model="ul.layers.routes.enabled" class="md-primary md-hue-2"></md-switch>
+    <md-icon md-svg-icon="{{ul.layers.routes.icon}}"></md-icon>
+    <p> {{ ul.layers.routes.name }} </p>
+    
+  </md-list-item>
+  
   <md-divider></md-divider>
   <md-subheader class="md-no-sticky">My Trips</md-subheader>
   </md-sidenav>
@@ -108,7 +124,9 @@
           </md-icon>
           <span flex="5"></span>
     </md-toolbar>
+    <div layout="row">
     <h3 layout-margin>Ride Indego - Nearby Stations</h3>
+  </div>
     <md-content layout="row" layout-align="start start" layout-margin class="md-whiteframe-z3" style="padding-bottom:10px;margin-bottom:5px;height:180px" layout-fill>
 <md-list style="min-width:370px" >
 
@@ -131,7 +149,7 @@
             <span style="padding-left:5px"> 12</span>
         </md-button>
         <span flex="10"></span>
-        <md-button class="md-fab md-mini md-primary md-hue-2" aria-label="Eat cake">
+        <md-button class="md-fab md-mini md-accent md-hue-2" aria-label="Eat cake">
             <span style="padding-left:5px"> 12</span>
         </md-button>
             <!-- <md-icon md-font-icon="icon-mode_comment"
@@ -213,14 +231,54 @@
                       .icon("twitter"    , "./assets/svg/twitter.svg"     , 512)
                       .icon("phone"      , "./assets/svg/phone.svg"       , 512);
 
+                      $mdThemingProvider.definePalette('amazingPaletteName', {
+    '50': 'ffebee',
+    '100': 'ffcdd2',
+    '200': 'ef9a9a',
+    '300': 'e57373',
+    '400': 'ef5350',
+    '500': 'f44336',
+    '600': 'a2d40a',
+    '700': 'd32f2f',
+    '800': 'c62828',
+    '900': '1A237E',
+    'A100': 'ff8a80',
+    'A200': 'ff5252',
+    'A400': 'ff1744',
+    'A700': 'd50000',
+    'contrastDefaultColor': 'light',    // whether, by default, text (contrast)
+                                        // on this palette should be dark or light
+    'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
+     '200', '300', '400', 'A100'],
+    'contrastLightColors': undefined    // could also specify this if default was 'dark'
+  });
                       $mdThemingProvider.theme('default')
-                          .primaryPalette('blue', {
+                          .primaryPalette('amazingPaletteName', {
                             'default': '900', // by default use shade 400 from the pink palette for primary intentions
                             'hue-1': '100', // use shade 100 for the <code>md-hue-1</code> class
                             'hue-2': '600', // use shade 600 for the <code>md-hue-2</code> class
                             'hue-3': 'A100' // use shade A100 for the <code>md-hue-3</code> class
                           })
-                          .accentPalette('grey');
+                          .accentPalette('grey',{
+                            'default': '900', // by default use shade 400 from the pink palette for primary intentions
+                            'hue-1': '100', // use shade 100 for the <code>md-hue-1</code> class
+                            'hue-2': '600', // use shade 600 for the <code>md-hue-2</code> class
+                            'hue-3': 'A100' // use shade A100 for the <code>md-hue-3</code> class
+                          });
+
+                       $mdThemingProvider.theme('green')
+                          .primaryPalette('light-green', {
+                            'default': '600', // by default use shade 400 from the pink palette for primary intentions
+                            'hue-1': '100', // use shade 100 for the <code>md-hue-1</code> class
+                            'hue-2': '600', // use shade 600 for the <code>md-hue-2</code> class
+                            'hue-3': 'A100' // use shade A100 for the <code>md-hue-3</code> class
+                          })
+                          .accentPalette('grey',{
+                            'default': '900', // by default use shade 400 from the pink palette for primary intentions
+                            'hue-1': '100', // use shade 100 for the <code>md-hue-1</code> class
+                            'hue-2': '600', // use shade 600 for the <code>md-hue-2</code> class
+                            'hue-3': 'A100' // use shade A100 for the <code>md-hue-3</code> class
+                          });
 
               });
 
