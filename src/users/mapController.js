@@ -19,6 +19,7 @@
     self.mapLoading = true;
     self.ref = new Firebase("https://phl.firebaseio.com");
     self.bikeFire = new GeoFire(self.ref.child("indego").child('_geofire'));
+    self.cycleref = new Firebase("https://cyclephilly.firebaseio.com");
     self.loggedOut = true;
     self.user={};
     self.IsActive = true;
@@ -128,10 +129,13 @@
         // $mdDialog.hide();
       } else {
         console.log("User is logged out");
+
+        //Login as anon
+        //self.cycleref.
         // showLoginDialog();
       }
     }
-    self.ref.onAuth(authDataCallback);
+    self.cycleref.onAuth(authDataCallback);
     
     // $http.get('https://api.phila.gov/bike-share-stations/v1')
     // .success(function(response){
@@ -165,7 +169,7 @@
       self.GeoMarker.setCircleOptions({fillColor: '#808080'});
 
         google.maps.event.addListenerOnce(self.GeoMarker, 'position_changed', function() {
-          self.map.setCenter(this.getPosition());
+          // self.map.setCenter(this.getPosition());
           /*************/
           /*  GEOQUERY */
           /*************/
@@ -202,8 +206,11 @@
           //   map: self.map
           // });
           // google.maps.event.addListener(self.bikeShares[placeId], 'click', self.showDetails);
-          self.sortedIndego = _.sortBy(placesInQuery, 'distance');
-          console.log(self.sortedIndego);
+          
+          $scope.$apply(function(){
+            $scope.sortedIndego = _.sortBy(placesInQuery, 'distance');
+          })
+          console.log($scope.sortedIndego);
         });
 
         /* Removes vehicle markers from the map when they exit the query */
@@ -253,8 +260,7 @@
             strokeOpacity: 0.8,
             strokeWeight:2
             },
-            draggable: false,
-            map: self.map
+            draggable: false
           });
           google.maps.event.addListener(self.bikeShares[value.$id], 'click', function(){
             $mdToast.show(
