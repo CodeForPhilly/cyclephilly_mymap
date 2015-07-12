@@ -124,64 +124,20 @@
         self.map = new google.maps.Map(document.getElementById("map-canvas"),
           mapOptions);
       }
-
+    self.crumbs = $firebaseArray(self.cycleref.child('anon').child('noid').child('crumbs'));
     function authDataCallback(authData) {
       if (authData) {
         self.loggedOut = false;
         console.log("User " + authData.uid + " is logged in with " + authData.provider);
         console.log(authData);
-        
-        
-        // $mdDialog.hide();
-      } else {
-        console.log("User is logged out");
-        self.cycleref.authAnonymously(function(error, authData) {
-          if (error) {
-            console.log("Login Failed!", error);
-          } else {
-            console.log("Authenticated successfully with payload:", authData);
-            self.crumbs = $firebaseArray(self.ref.child('anon').child(authData.uid).child('crumbs'));
-            self.crumbs.$loaded().then(function() {
-              console.log(self.user);
-              self.trackingStart = true;
-              // self.user.$bindTo($rootScope,'crumbs');
-            });
-          }
+        self.crumbs = $firebaseArray(self.cycleref.child('anon').child(authData.uid).child('crumbs'));
+        self.crumbs.$loaded().then(function() {
+          console.log(self.user);
+          self.trackingStart = true;
+          // self.user.$bindTo($rootScope,'crumbs');
         });
-        //Login as anon
-        //self.cycleref.
-        // showLoginDialog();
-      }
-    }
-    self.cycleref.onAuth(authDataCallback);
-    
-    // $http.get('https://api.phila.gov/bike-share-stations/v1')
-    // .success(function(response){
-    //   self.searching = false;
-      
-    //   angular.forEach(response.features,function(v, key){
-    //     console.log(v);
-    //     self.bikeFire.set(v.properties.kioskId.toString(), [v.geometry.coordinates[0],v.geometry.coordinates[1]]).then(function() {
-    //       console.log("Provided key has been added to GeoFire");
-    //       self.ref.child("bikeshare").child("kiosks").child(v.properties.kioskId).set(v);
-    //     }, function(error) {
-    //       console.log("Error: " + error);
-    //     });
-    //   })
-    // })
-    // .error(function(data, status, headers, config){
-    //   self.searching = false;
-    //   $mdToast.show(
-    //     $mdToast.simple()
-    //     .content("An error Occured.")
-    //     .position('top right')
-    //     .hideDelay(3000)
-    //   );
-    //   console.log(data);
-    // });
 
-
-    self.bikshareKiosks = $firebaseArray(self.ref.child('indego').child("kiosks"));
+        self.bikshareKiosks = $firebaseArray(self.ref.child('indego').child("kiosks"));
       self.bikshareKiosks.$loaded().then(function(){
         
       self.GeoMarker = new GeolocationMarker();
@@ -189,9 +145,7 @@
 
         google.maps.event.addListenerOnce(self.GeoMarker, 'position_changed', function() {
           self.map.setCenter(this.getPosition());
-          if(self.trackingStart){
             self.crumbs.$add({timestamp:Firebase.ServerValue.TIMESTAMP,lat:this.getPosition().lat(),lng:this.getPosition().lng()})
-          }
           /*************/
           /*  GEOQUERY */
           /*************/
@@ -301,6 +255,53 @@
           
         });
       });
+        
+        
+        // $mdDialog.hide();
+      } else {
+        console.log("User is logged out");
+        self.cycleref.authAnonymously(function(error, authData) {
+          if (error) {
+            console.log("Login Failed!", error);
+          } else {
+            console.log("Authenticated successfully with payload:", authData);
+            
+          }
+        });
+        //Login as anon
+        //self.cycleref.
+        // showLoginDialog();
+      }
+    }
+    self.cycleref.onAuth(authDataCallback);
+    
+    // $http.get('https://api.phila.gov/bike-share-stations/v1')
+    // .success(function(response){
+    //   self.searching = false;
+      
+    //   angular.forEach(response.features,function(v, key){
+    //     console.log(v);
+    //     self.bikeFire.set(v.properties.kioskId.toString(), [v.geometry.coordinates[0],v.geometry.coordinates[1]]).then(function() {
+    //       console.log("Provided key has been added to GeoFire");
+    //       self.ref.child("bikeshare").child("kiosks").child(v.properties.kioskId).set(v);
+    //     }, function(error) {
+    //       console.log("Error: " + error);
+    //     });
+    //   })
+    // })
+    // .error(function(data, status, headers, config){
+    //   self.searching = false;
+    //   $mdToast.show(
+    //     $mdToast.simple()
+    //     .content("An error Occured.")
+    //     .position('top right')
+    //     .hideDelay(3000)
+    //   );
+    //   console.log(data);
+    // });
+
+
+    
 
     // self.datasets = $firebaseArray(self.ref.child('datasets').orderByChild("featured").equalTo(true));
     // self.datasets.$loaded().then(function() {
