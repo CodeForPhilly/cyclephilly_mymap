@@ -26,6 +26,7 @@
     self.sortedIndego = [];
     self.bikeShares = [];
     self.radius = 1000;
+    self.trackingStart = false;
     self.locations = {
       "philly": [39.9620048,-75.1695314]
     };
@@ -115,7 +116,7 @@
 
     self.mapCenter = new google.maps.LatLng(self.center[0],self.center[1]);
       var mapOptions = {
-        zoom: 16,
+        zoom: 15,
         center: self.mapCenter,
         mapTypeId: google.maps.MapTypeId.MAP
       };
@@ -129,37 +130,24 @@
         self.loggedOut = false;
         console.log("User " + authData.uid + " is logged in with " + authData.provider);
         console.log(authData);
-        $rootScope.userEmail = authData.github.email;
-        $rootScope.userName = authData.github.username;
-        $rootScope.uid = authData.uid;
-        $rootScope.token = authData.token;
         
-        self.user = $firebaseObject(self.ref.child('users').child(authData.uid));
-        self.user.$loaded().then(function() {
-          console.log(self.user);
-          self.user.$bindTo($rootScope,'user');
-          self.user.username = authData.github.username;
-          self.user.image = authData.github.cachedUserProfile.avatar_url;
-        });
-
-        self.favorites = $firebaseArray(self.ref.child('users').child(authData.uid).child('favorites').orderByKey());
-        self.favorites.$loaded().then(function() {
-          console.log(self.favorites);
-        });
-
-        
-        $mdToast.show(
-        $mdToast.simple()
-        .content("Hello "+$rootScope.userName+"!")
-        .position('top right')
-        .hideDelay(500)
-      );
-
         
         // $mdDialog.hide();
       } else {
         console.log("User is logged out");
-
+        self.cycleref.authAnonymously(function(error, authData) {
+          if (error) {
+            console.log("Login Failed!", error);
+          } else {
+            console.log("Authenticated successfully with payload:", authData);
+            self.crumbs = $firebaseArray(self.ref.child('anon').child(authData.uid).child('crumbs'));
+            self.crumbs.$loaded().then(function() {
+              console.log(self.user);
+              self.trackingStart = true;
+              // self.user.$bindTo($rootScope,'crumbs');
+            });
+          }
+        });
         //Login as anon
         //self.cycleref.
         // showLoginDialog();
@@ -192,6 +180,7 @@
     //   console.log(data);
     // });
 
+
     self.bikshareKiosks = $firebaseArray(self.ref.child('indego').child("kiosks"));
       self.bikshareKiosks.$loaded().then(function(){
         
@@ -199,7 +188,10 @@
       self.GeoMarker.setCircleOptions({fillColor: '#808080'});
 
         google.maps.event.addListenerOnce(self.GeoMarker, 'position_changed', function() {
-          // self.map.setCenter(this.getPosition());
+          self.map.setCenter(this.getPosition());
+          if(self.trackingStart){
+            self.crumbs.$add({timestamp:Firebase.ServerValue.TIMESTAMP,lat:this.getPosition().lat(),lng:this.getPosition().lng()})
+          }
           /*************/
           /*  GEOQUERY */
           /*************/
@@ -274,7 +266,7 @@
               fillopacity= 0.4;
             }else{
               fillcolor = "#002369"
-              fillopacity= 0.4;
+              fillopacity= value.properties.bikesAvailable/value.properties.totalDocks;
             }
             
           }
@@ -290,7 +282,8 @@
             strokeOpacity: 0.8,
             strokeWeight:2
             },
-            draggable: false
+            draggable: false,
+            map: self.map
           });
           google.maps.event.addListener(self.bikeShares[value.$id], 'click', function(){
             $mdToast.show(
