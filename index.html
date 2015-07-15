@@ -70,7 +70,7 @@
     </md-list>
     <md-divider></md-divider>
 
-    <md-subheader class="md-no-sticky">Bike Layers</md-subheader>
+  <md-subheader class="md-no-sticky">Bike Layers</md-subheader>
 
   <md-list-item  ng-click="navigateTo(setting.extraScreen, $event)">
   <md-switch  ng-model="ul.layers.indego.enabled" class="md-primary"></md-switch>
@@ -101,7 +101,7 @@
   <div flex layout="column" tabIndex="-1" role="main" class="md-whiteframe-z2">
 
     <md-toolbar layout="row" class="md-whiteframe-z1" layout-align="center center">
-      <md-button class="menu" hide-gt-sm ng-click="ul.toggleList()" aria-label="Show User List">
+      <md-button class="md-icon-button menu" hide-gt-sm ng-click="ul.toggleList()" aria-label="Show User List">
         <md-icon md-svg-icon="menu" ></md-icon>
       </md-button>
       <md-button ng-click="ul.toggleMode('bike')"
@@ -128,7 +128,7 @@
     <h3 layout-margin>Ride Indego - Nearby Stations</h3>
   </div>
     <md-content layout="row" layout-align="start start" layout-margin class="md-whiteframe-z3" style="padding-bottom:10px;margin-bottom:5px;height:280px" layout-fill>
-<md-list style="min-width:420px" >
+<md-list style="min-width:450px" >
 
   <md-list-item class="md-2-line md-no-sticky" ng-repeat="station in sortedIndego">
     <!-- <img alt="{{ station.name }}" ng-src="assets/indego-light.png" class="md-avatar avatar" /> -->

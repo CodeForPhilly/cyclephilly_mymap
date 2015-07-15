@@ -27,6 +27,8 @@
     self.bikeShares = [];
     self.radius = 1000;
     self.trackingStart = false;
+    self.lng = -75.1695314;
+    self.lat = 39.9620048;
     self.locations = {
       "philly": [39.9620048,-75.1695314]
     };
@@ -138,6 +140,33 @@
         });
 
         self.bikshareKiosks = $firebaseArray(self.ref.child('indego').child("kiosks"));
+        self.bikeshareUnwatch = self.bikshareKiosks.$watch(function(){
+          var placesInQuery = [];
+          self.geoQuery = self.bikeFire.query({
+            center: [self.lng,self.lat],
+            radius: 0.5
+          });
+
+          var onKeyEnteredRegistration = self.geoQuery.on("key_entered", function(key, location, distance) {
+          // Specify that the vehicle has entered this query
+          // console.log(key+" "+distance+" "+location);
+          var dd=_.findIndex(self.bikshareKiosks, function(chr) {
+            return chr.$id == key;
+          });
+          placesInQuery.push({key:key,distance:distance,location:location,properties:self.bikshareKiosks[dd].properties});
+          $scope.$apply(function(){
+            $scope.sortedIndego = _.sortBy(placesInQuery, 'distance');
+          })
+          // console.log($scope.sortedIndego);
+        });
+
+        /* Removes vehicle markers from the map when they exit the query */
+        self.geoQuery.on("key_exited", function(placeId, vehicleLocation) {
+          // Get the vehicle from the list of vehicles in the query
+          placeId = placeId.split(":")[1];
+          vm.bikeShares[placeId].setMap(null);
+        });
+        })
       self.bikshareKiosks.$loaded().then(function(){
         
       self.GeoMarker = new GeolocationMarker();
@@ -145,6 +174,8 @@
 
         google.maps.event.addListenerOnce(self.GeoMarker, 'position_changed', function() {
           self.map.setCenter(this.getPosition());
+          self.lng = this.getPosition().lng();
+          self.lat = this.getPosition().lat();
             self.crumbs.$add({timestamp:Firebase.ServerValue.TIMESTAMP,lat:this.getPosition().lat(),lng:this.getPosition().lng()})
           /*************/
           /*  GEOQUERY */
@@ -242,7 +273,7 @@
           google.maps.event.addListener(self.bikeShares[value.$id], 'click', function(){
             $mdToast.show(
               $mdToast.simple()
-              .content(value.properties.bikesAvailable+" bikes available! "+value.properties.docksAvailable+" docks available!")
+              .content(value.properties.name+": "+value.properties.bikesAvailable+" bikes available! "+value.properties.docksAvailable+" docks available!")
               .position('top right')
               .hideDelay(4000)
             );
