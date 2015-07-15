@@ -128,14 +128,16 @@
     <h3 layout-margin>Ride Indego - Nearby Stations</h3>
   </div>
     <md-content layout="row" layout-align="start start" layout-margin class="md-whiteframe-z3" style="padding-bottom:10px;margin-bottom:5px;height:280px" layout-fill>
-<md-list style="min-width:450px" >
+<md-list style="min-width:470px" >
 
   <md-list-item class="md-2-line md-no-sticky" ng-repeat="station in sortedIndego">
     <!-- <img alt="{{ station.name }}" ng-src="assets/indego-light.png" class="md-avatar avatar" /> -->
-    <span layout-padding style="min-width:200px">
+    <div layout-padding style="width:200px">
       <br>
-      {{station.properties.name}}
-    </span>
+      {{station.properties.name}}<br>
+      <small><strong>Station ID:</strong> {{station.properties.kioskId}}</small><br>
+      
+    </div>
         <div class="md-list-item-text">
           <div layout="row" layout-fill>
             <span flex="5"></span>

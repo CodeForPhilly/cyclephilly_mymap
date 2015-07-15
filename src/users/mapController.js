@@ -50,7 +50,7 @@
       "docksAvailable": "--",
       "isEventBased": false,
       "isVirtual": false,
-      "kioskId": 0,
+      "kioskId": false,
       "kioskPublicStatus": "Active",
       "name": "Loading nearest stations...",
       "openTime": "00:02:00",
