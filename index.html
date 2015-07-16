@@ -80,7 +80,7 @@
   </md-list-item>
 
   <md-list-item  ng-click="navigateTo(setting.extraScreen, $event)">
-  <md-switch  ng-model="ul.layers.racks.enabled" class="md-accent"></md-switch>
+  <md-switch  ng-model="ul.layers.racks.enabled" ng-change="ul.onRackSwitch(ul.layers.racks.enabled)"  class="md-accent"></md-switch>
     <md-icon md-svg-icon="{{ul.layers.racks.icon}}"></md-icon>
     <p> {{ ul.layers.racks.name }} </p>
     
@@ -129,6 +129,44 @@
   </div>
     <md-content layout="row" layout-align="start start" layout-margin class="md-whiteframe-z3" style="padding-bottom:10px;margin-bottom:5px;height:280px" layout-fill>
 <md-list style="min-width:470px" >
+  
+  <md-list-item class="md-2-line md-no-sticky" ng-repeat="station in selectedItems">
+    <!-- <img alt="{{ station.name }}" ng-src="assets/indego-light.png" class="md-avatar avatar" /> -->
+    <div layout-padding style="width:200px">
+      <br>
+      {{station.properties.name}}<br>
+      <small><strong>Station ID:</strong> {{station.properties.kioskId}}</small><br>
+      
+    </div>
+        <div class="md-list-item-text">
+          <div layout="row" layout-fill>
+            <span flex="5"></span>
+            <p style="font-size:1.1em;text-align:center">Bikes</p>
+                   <span flex="15"></span>
+                   <p style="font-size:1.1em">Docks</p>
+                 </div>
+          <div layout="row" layout-fill>
+            <md-button class="md-fab md-mini md-primary" aria-label="Eat cake">
+            <span style="padding-left:5px"> {{station.properties.bikesAvailable}}</span>
+        </md-button>
+        <span flex="10"></span>
+        <md-button class="md-fab md-mini md-accent md-hue-2" aria-label="Eat cake">
+            <span style="padding-left:5px"> {{station.properties.docksAvailable}}</span>
+        </md-button>
+            <!-- <md-icon md-font-icon="icon-mode_comment"
+                   ng-style="{'font-size': '24px', height: '24px'}"
+                   ng-class="md-accent"
+                   ng-click="ul.test($event)"
+                   alt="print"></md-icon>
+                   <span flex="25"></span>
+                   <md-icon md-font-icon="icon-mode_comment"
+                   ng-style="{'font-size': '24px', height: '24px'}"
+                   ng-class="md-accent"
+                   ng-click="ul.test($event)"
+                   alt="print"></md-icon> -->
+                 </div>
+        </div>
+  </md-list-item>
 
   <md-list-item class="md-2-line md-no-sticky" ng-repeat="station in sortedIndego">
     <!-- <img alt="{{ station.name }}" ng-src="assets/indego-light.png" class="md-avatar avatar" /> -->

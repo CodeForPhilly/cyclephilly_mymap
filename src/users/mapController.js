@@ -19,19 +19,34 @@
     self.mapLoading = true;
     self.ref = new Firebase("https://phl.firebaseio.com");
     self.bikeFire = new GeoFire(self.ref.child("indego").child('_geofire'));
+<<<<<<< HEAD
+=======
+    self.racksFire = new GeoFire(self.ref.child("racks").child('_geofire'));
+>>>>>>> 2ff39be0c1bf0b0e4a6f1e5c6a77fd6b1b62aa18
     self.cycleref = new Firebase("https://cyclephilly.firebaseio.com");
     self.loggedOut = true;
     self.user={};
+    self.selectedItems = [];
+    self.navIcon1 = "icon-directions_bike"
     self.IsActive = true;
     self.sortedIndego = [];
     self.bikeShares = [];
+    self.racks=[];
     self.radius = 1000;
     self.trackingStart = false;
     self.lng = -75.1695314;
     self.lat = 39.9620048;
+<<<<<<< HEAD
     self.locations = {
       "philly": [39.9620048,-75.1695314]
     };
+=======
+    self.indegoStrokeColor = '#002369';
+    self.locations = {
+      "philly": [39.9620048,-75.1695314]
+    };
+    $scope.sortedRacks = [];
+>>>>>>> 2ff39be0c1bf0b0e4a6f1e5c6a77fd6b1b62aa18
     $scope.sortedIndego = [
   {
     "key": "0",
@@ -87,7 +102,103 @@
         .hideDelay(4000)
       );
     }
-
+self.mapStyle = [
+  {
+    "elementType": "geometry",
+    "stylers": [
+      { "invert_lightness": true }
+    ]
+  },{
+    "featureType": "landscape",
+    "stylers": [
+      { "visibility": "simplified" },
+      { "invert_lightness": true }
+    ]
+  },{
+    "featureType": "road",
+    "elementType": "geometry.fill",
+    "stylers": [
+      { "lightness": 77 }
+    ]
+  },{
+    "featureType": "road",
+    "elementType": "labels.text",
+    "stylers": [
+      { "visibility": "simplified" }
+    ]
+  },{
+  },{
+    "featureType": "transit",
+    "elementType": "geometry.fill",
+    "stylers": [
+      { "color": "#f14728" },
+      { "weight": 1 }
+    ]
+  },{
+    "featureType": "water",
+    "elementType": "geometry.fill",
+    "stylers": [
+      { "lightness": 69 }
+    ]
+  },{
+    "featureType": "water",
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      { "visibility": "simplified" }
+    ]
+  },{
+    "featureType": "administrative.neighborhood",
+    "elementType": "labels",
+    "stylers": [
+      { "visibility": "simplified" },
+      { "saturation": -30 },
+      { "color": "#252651" },
+      { "invert_lightness": true },
+      { "lightness": -41 }
+    ]
+  },{
+    "featureType": "poi",
+    "elementType": "geometry.fill",
+    "stylers": [
+      { "lightness": 52 }
+    ]
+  },{
+    "featureType": "poi",
+    "elementType": "labels.text",
+    "stylers": [
+      { "visibility": "simplified" }
+    ]
+  },{
+    "featureType": "road",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      { "lightness": 47 }
+    ]
+  },{
+    "featureType": "poi.school",
+    "elementType": "geometry",
+    "stylers": [
+      { "lightness": 12 }
+    ]
+  },{
+    "featureType": "poi.medical",
+    "elementType": "geometry.fill",
+    "stylers": [
+      { "invert_lightness": true },
+      { "visibility": "on" },
+      { "lightness": 44 }
+    ]
+  },{
+    "featureType": "road",
+    "elementType": "labels.icon",
+    "stylers": [
+      { "visibility": "simplified" }
+    ]
+  },{
+  }
+];
+self.styledMap = new google.maps.StyledMapType(self.mapStyle,
+    {name: "Philly Map"});
     var weatherRef = new Firebase('https://publicdata-weather.firebaseio.com/washington/currently');
     var hourlyWeatherRef = new Firebase('https://publicdata-weather.firebaseio.com/washington/hourly');
     hourlyWeatherRef.child('summary').on('value', function(snapshot) {
@@ -104,15 +215,26 @@
       self.weather.temperature = snapshot.val();
   });
 
-    self.showDetails = function(e){
-      // console.log(key)
+    self.showDetails = function(){
       $mdToast.show(
         $mdToast.simple()
-        .content("This action is under construction.")
+        .content(value.properties.name+": "+value.properties.bikesAvailable+" bikes available! "+value.properties.docksAvailable+" docks available!")
         .position('top right')
         .hideDelay(4000)
       );
-      self.stationName = "yo"
+      self.selectedItems = [];
+      self.selectedItems.push(value);
+
+    }
+
+    self.rackDetails = function(){
+      $mdToast.show(
+        $mdToast.simple()
+        .content("soon.")
+        .position('top right')
+        .hideDelay(2000)
+      );
+
     }
     self.center = self.locations["philly"];
 
@@ -120,11 +242,15 @@
       var mapOptions = {
         zoom: 15,
         center: self.mapCenter,
-        mapTypeId: google.maps.MapTypeId.MAP
+        mapTypeControlOptions:{
+          mapTypeIds: [google.maps.MapTypeId.ROADMAP,'map_style']
+        }
       };
       if(self.map === undefined){
         self.map = new google.maps.Map(document.getElementById("map-canvas"),
           mapOptions);
+        self.map.mapTypes.set('map_style', self.styledMap);
+        self.map.setMapTypeId('map_style');
       }
     self.crumbs = $firebaseArray(self.cycleref.child('anon').child('noid').child('crumbs'));
     function authDataCallback(authData) {
@@ -139,14 +265,20 @@
           // self.user.$bindTo($rootScope,'crumbs');
         });
 
+<<<<<<< HEAD
         self.bikshareKiosks = $firebaseArray(self.ref.child('indego').child("kiosks"));
         self.bikeshareUnwatch = self.bikshareKiosks.$watch(function(){
+=======
+      self.bikshareKiosks = $firebaseArray(self.ref.child('indego').child("kiosks"));
+      self.bikeshareUnwatch = self.bikshareKiosks.$watch(function(){
+>>>>>>> 2ff39be0c1bf0b0e4a6f1e5c6a77fd6b1b62aa18
           var placesInQuery = [];
           self.geoQuery = self.bikeFire.query({
             center: [self.lng,self.lat],
             radius: 0.5
           });
 
+<<<<<<< HEAD
           var onKeyEnteredRegistration = self.geoQuery.on("key_entered", function(key, location, distance) {
           // Specify that the vehicle has entered this query
           // console.log(key+" "+distance+" "+location);
@@ -167,13 +299,76 @@
           vm.bikeShares[placeId].setMap(null);
         });
         })
+=======
+        // self.geoQuery.on("key_entered", function(key, location, distance) {
+        //   // Specify that the vehicle has entered this query
+        //   // console.log(key+" "+distance+" "+location);
+        //   var dd=_.findIndex(self.bikshareKiosks, function(chr) {
+        //     return chr.$id == key;
+        //   });
+        //   placesInQuery.push({key:key,distance:distance,location:location,properties:self.bikshareKiosks[dd].properties});
+        //   $scope.$apply(function(){
+        //     $scope.sortedIndego = _.sortBy(placesInQuery, 'distance');
+        //   })
+        //   // console.log($scope.sortedIndego);
+        // });
+
+        // /* Removes vehicle markers from the map when they exit the query */
+        // self.geoQuery.on("key_exited", function(placeId, vehicleLocation) {
+        //   // Get the vehicle from the list of vehicles in the query
+        //   self.bikeShares[placeId].setMap(null);
+        // });
+      });
+
+>>>>>>> 2ff39be0c1bf0b0e4a6f1e5c6a77fd6b1b62aa18
       self.bikshareKiosks.$loaded().then(function(){
         
       self.GeoMarker = new GeolocationMarker();
       self.GeoMarker.setCircleOptions({fillColor: '#808080'});
 
+
+
         google.maps.event.addListenerOnce(self.GeoMarker, 'position_changed', function() {
           self.map.setCenter(this.getPosition());
+<<<<<<< HEAD
+=======
+          angular.forEach(self.bikshareKiosks, function(value, key) {
+          // console.log(value);
+          var fillcolor;
+          var fillopacity;
+          if(value.properties.bikesAvailable == 0){
+            fillcolor = "#FFFFFF";
+            fillopacity= 0.7;
+          }else{
+            if (value.properties.bikesAvailable <= 4) {
+              fillcolor = "#a2d40a";
+              fillopacity= 0.4;
+            }else{
+              fillcolor = "#002369"
+              fillopacity= value.properties.bikesAvailable/value.properties.totalDocks;
+            }
+            
+          }
+          var loc = new google.maps.LatLng(value.geometry.coordinates[1],value.geometry.coordinates[0])
+          self.bikeShares[value.$id] = new google.maps.Marker({
+            position: loc,
+            icon: {
+              path: google.maps.SymbolPath.CIRCLE,
+              scale: 6,
+              fillColor: fillcolor,
+              fillOpacity: fillopacity,
+              strokeColor: '#002369',
+            strokeOpacity: 0.8,
+            strokeWeight:2,
+
+            },
+            draggable: false
+          });
+          google.maps.event.addListener(self.bikeShares[value.$id], 'click', self.showDetails);
+          
+          
+        });
+>>>>>>> 2ff39be0c1bf0b0e4a6f1e5c6a77fd6b1b62aa18
           self.lng = this.getPosition().lng();
           self.lat = this.getPosition().lat();
             self.crumbs.$add({timestamp:Firebase.ServerValue.TIMESTAMP,lat:this.getPosition().lat(),lng:this.getPosition().lng()})
@@ -186,17 +381,20 @@
           // Create a new GeoQuery instance
           self.geoQuery = self.bikeFire.query({
             center: [this.getPosition().lng(),this.getPosition().lat()],
-            radius: 0.5
+            radius: 0.9
           });
 
           var onKeyEnteredRegistration = self.geoQuery.on("key_entered", function(key, location, distance) {
           // Specify that the vehicle has entered this query
           // console.log(key+" "+distance+" "+location);
+
+          // self.bikeShares[key].setMap(self.map);
           var dd=_.findIndex(self.bikshareKiosks, function(chr) {
             return chr.$id == key;
           });
           placesInQuery.push({key:key,distance:distance,location:location,properties:self.bikshareKiosks[dd].properties});
           
+<<<<<<< HEAD
           // var loc = new google.maps.LatLng(location[0],location[1])
           // self.bikeShares[placeId] = new google.maps.Marker({
           //   position: loc,
@@ -241,35 +439,43 @@
         angular.forEach(self.bikshareKiosks, function(value, key) {
           console.log(value);
           var fillcolor
+=======
+          var fillcolor;
+>>>>>>> 2ff39be0c1bf0b0e4a6f1e5c6a77fd6b1b62aa18
           var fillopacity;
-          if(value.properties.bikesAvailable == 0){
+          if(self.bikshareKiosks[dd].properties.bikesAvailable == 0){
             fillcolor = "#FFFFFF";
             fillopacity= 0.7;
           }else{
-            if (value.properties.bikesAvailable <= 4) {
+            if (self.bikshareKiosks[dd].properties.bikesAvailable <= 4) {
               fillcolor = "#a2d40a";
               fillopacity= 0.4;
             }else{
               fillcolor = "#002369"
+<<<<<<< HEAD
               fillopacity= value.properties.bikesAvailable/value.properties.totalDocks;
+=======
+              fillopacity= self.bikshareKiosks[dd].properties.bikesAvailable/self.bikshareKiosks[dd].properties.totalDocks;
+>>>>>>> 2ff39be0c1bf0b0e4a6f1e5c6a77fd6b1b62aa18
             }
             
           }
-          var loc = new google.maps.LatLng(value.geometry.coordinates[1],value.geometry.coordinates[0])
-          self.bikeShares[value.$id] = new google.maps.Marker({
+          var loc = new google.maps.LatLng(location[1],location[0])
+          self.bikeShares[key] = new google.maps.Marker({
             position: loc,
             icon: {
               path: google.maps.SymbolPath.CIRCLE,
               scale: 6,
               fillColor: fillcolor,
               fillOpacity: fillopacity,
-              strokeColor: '#002369',
+              strokeColor: self.indegoStrokeColor,
             strokeOpacity: 0.8,
             strokeWeight:2
             },
             draggable: false,
             map: self.map
           });
+<<<<<<< HEAD
           google.maps.event.addListener(self.bikeShares[value.$id], 'click', function(){
             $mdToast.show(
               $mdToast.simple()
@@ -282,9 +488,38 @@
             self.docksAvailable = value.properties.docksAvailable;
 
           });
+=======
+          google.maps.event.addListener(self.bikeShares[key], 'click', self.showDetails);
+>>>>>>> 2ff39be0c1bf0b0e4a6f1e5c6a77fd6b1b62aa18
           
-          
+          $scope.$apply(function(){
+            $scope.sortedIndego = _.sortBy(placesInQuery, 'distance');
+          })
+          // console.log(self.bikeShares[key]);
+          self.bikeShares[key].setMap(self.map);
         });
+
+        /* Removes vehicle markers from the map when they exit the query */
+        self.geoQuery.on("key_exited", function(placeId, vehicleLocation) {
+          // Get the vehicle from the list of vehicles in the query
+          placeId = placeId.split(":")[1];
+          self.bikeShares[key].setMap(null);
+        });
+          
+          // self.map.fitBounds(this.getBounds());
+        });
+
+        google.maps.event.addListener(self.GeoMarker, 'geolocation_error', function(e) {
+          alert('There was an error obtaining your position. Message: ' + e.message);
+
+        });
+
+        self.GeoMarker.setMap(self.map);
+        
+        self.mapLoading = false;
+        
+
+        
       });
         
         
@@ -305,16 +540,45 @@
       }
     }
     self.cycleref.onAuth(authDataCallback);
+<<<<<<< HEAD
     
     // $http.get('https://api.phila.gov/bike-share-stations/v1')
+=======
+
+    self.onRackSwitch = function(cbState){
+      if(cbState == true){
+          self.getCurrentRacks();
+          racksMessage = "Now displaying "+$scope.sortedRacks.length+" racks within 500m";
+        }else{
+          self.removeRacks();
+          racksMessage = "Now hiding racks";
+        }
+      $mdToast.show(
+        $mdToast.simple()
+        .content(racksMessage)
+        .position('top right')
+        .hideDelay(4000)
+      );
+
+    
+    }
+    
+    // $http.get('https://raw.githubusercontent.com/CityOfPhiladelphia/phl-open-geodata/master/bike_racks/bike_racks.geojson')
+>>>>>>> 2ff39be0c1bf0b0e4a6f1e5c6a77fd6b1b62aa18
     // .success(function(response){
     //   self.searching = false;
       
     //   angular.forEach(response.features,function(v, key){
     //     console.log(v);
+<<<<<<< HEAD
     //     self.bikeFire.set(v.properties.kioskId.toString(), [v.geometry.coordinates[0],v.geometry.coordinates[1]]).then(function() {
     //       console.log("Provided key has been added to GeoFire");
     //       self.ref.child("bikeshare").child("kiosks").child(v.properties.kioskId).set(v);
+=======
+    //     self.racksFire.set(v.id.toString(), [v.geometry.coordinates[0],v.geometry.coordinates[1]]).then(function() {
+    //       console.log("Provided key has been added to GeoFire");
+    //       self.ref.child("racks").child(v.id).set(v);
+>>>>>>> 2ff39be0c1bf0b0e4a6f1e5c6a77fd6b1b62aa18
     //     }, function(error) {
     //       console.log("Error: " + error);
     //     });
@@ -368,6 +632,66 @@
     indego:{name:"Ride Indego",enabled:true,color:"md-primary"},
     racks:{name:"Bike Racks",enabled:false,color:"md-accent"},
     routes:{name:"Bike Routes",enabled:true,color:"md-primary md-hue-2"},
+    }
+
+    self.removeRacks = function(){
+      self.racksQuery.cancel();
+      angular.forEach(self.racks,function(value,key){
+        self.racks[key].setMap(null);
+      });
+    }
+
+    self.getCurrentRacks = function(){
+      racksInQuery = [];
+      self.racksQuery = self.racksFire.query({
+        center: [self.lng,self.lat],
+        radius: 0.5
+      });
+
+      self.onKeyEnteredRacks = self.racksQuery.on("key_entered", function(key, location, distance) {
+      // Specify that the vehicle has entered this query
+      // console.log(key+" "+distance+" "+location);
+
+      // self.bikeShares[key].setMap(self.map);
+      var dd=_.findIndex(self.bikshareKiosks, function(chr) {
+        return chr.$id == key;
+      });
+      racksInQuery.push({key:key,distance:distance,location:location} );
+      
+      var fillcolor;
+      var fillopacity;
+        fillcolor = "#000000";
+        fillopacity= 0.7;
+
+      var loc = new google.maps.LatLng(location[1],location[0])
+      self.racks[key] = new google.maps.Marker({
+        position: loc,
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: 3,
+          fillColor: fillcolor,
+          fillOpacity: fillopacity,
+          strokeColor: fillcolor,
+        strokeOpacity: 0.8,
+        strokeWeight:2
+        },
+        draggable: false,
+        map: self.map
+      });
+      google.maps.event.addListener(self.racks[key], 'click', self.rackDetails);
+      
+      $scope.$apply(function(){
+        $scope.sortedRacks = _.sortBy(racksInQuery, 'distance');
+      })
+      // console.log($scope.sortedRacks);
+      self.racks[key].setMap(self.map);
+    });
+
+    /* Removes vehicle markers from the map when they exit the query */
+    self.racksQuery.on("key_exited", function(placeId, vehicleLocation) {
+      // Get the vehicle from the list of vehicles in the query
+      self.racks[placeId].setMap(null);
+    });
     }
 
 
