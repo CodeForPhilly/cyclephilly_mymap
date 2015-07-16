@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en" >
+  <head>
+    <title>Cycle Map_</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
+    <link rel="stylesheet" href="./bower_components/angular-material/angular-material.css"/>
+    <link rel="stylesheet" href="assets/icomoon/style.css">
+    <link rel="stylesheet" href="assets/app.css"/>
+    <link rel="stylesheet" href="assets/style.css"/>
+  </head>
+
+  <body ng-app="starterApp" layout="row" ng-controller="UserController as ul">
+
+  <md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2"
+                md-component-id="left"
+                md-is-locked-open="$mdMedia('gt-sm')">
+    <header class="nav-header md-whiteframe-z2" layout="column" layout-align="center center" layout-padding>
+      <a ng-href="#/" class="docs-logo" href="#/">
+        <img src="assets/cycle-logo.png" style="width:50px">
+        
+      </a>
+      <h2 class="docs-logotype md-heading">CyclePhilly</h2>
+      <div layout="row">
+        <md-icon md-font-icon="{{ul.weather.icon.name}}"
+           ng-style="{color: ul.weather.icon.color }"
+           ng-class="md-warn"
+           alt="weather Icon"
+           class="step ">
+        </md-icon>
+        <span>{{ul.weather.temperature}} &deg;</span>
+        
+      </div>
+    </header>
+    
+
+    <md-list>
+    <md-list-item ng-click="ul.logOut()" ng-hide="ul.loggedOut">
+
+    <md-icon md-font-icon="icon-exit"
+                   ng-style="{'font-size': '24px', height: '24px'}"
+                   ng-class="md-accent"
+                   alt="print">
+          </md-icon>
+    <p>Logout</p>
+    <img ng-src="{{ul.user.image}}" ng-style="{height: '24px'}" />
+<md-divider></md-divider>
+    
+  </md-list-item>
+  
+  <md-list-item ng-repeat="set in ul.user.favorites | limitTo:3" ng-click="goToDatSet(set.name, $event)">
+    <img alt="{{ set.name }}" ng-src="{{ set.img }}" class="md-avatar" />
+    <p>{{ set.name }}</p>
+    <md-icon md-svg-icon="communication:messenger" ng-click="doSecondaryAction($event)" aria-label="Open Chat" class="md-secondary md-hue-3" ng-class="{'md-primary': set.newMessage}"></md-icon>
+  </md-list-item>
+  <md-list-item ng-click="ul.githubLogin()" ng-show="ul.loggedOut">
+    <md-icon md-font-icon="icon-github"
+                   ng-style="{'font-size': '24px', height: '24px'}"
+                   ng-class="md-accent"
+                   alt="print">
+          </md-icon>
+    <p>Log In</p>
+    
+  </md-list-item>
+    </md-list>
+    <md-divider></md-divider>
+
+  <md-subheader class="md-no-sticky">Bike Layers</md-subheader>
+
+  <md-list-item  ng-click="navigateTo(setting.extraScreen, $event)">
+  <md-switch  ng-model="ul.layers.indego.enabled" class="md-primary"></md-switch>
+    <md-icon md-svg-icon="{{ul.layers.indego.icon}}"></md-icon>
+    <p> {{ ul.layers.indego.name }} </p>
+    
+  </md-list-item>
+
+  <md-list-item  ng-click="navigateTo(setting.extraScreen, $event)">
+  <md-switch  ng-model="ul.layers.racks.enabled" class="md-accent"></md-switch>
+    <md-icon md-svg-icon="{{ul.layers.racks.icon}}"></md-icon>
+    <p> {{ ul.layers.racks.name }} </p>
+    
+  </md-list-item>
+
+  <md-list-item  ng-click="navigateTo(setting.extraScreen, $event)">
+  <md-switch  ng-model="ul.layers.routes.enabled" class="md-primary md-hue-2"></md-switch>
+    <md-icon md-svg-icon="{{ul.layers.routes.icon}}"></md-icon>
+    <p> {{ ul.layers.routes.name }} </p>
+    
+  </md-list-item>
+  
+  <md-divider></md-divider>
+  <md-subheader class="md-no-sticky">My Trips</md-subheader>
+  </md-sidenav>
+
+
+  <div flex layout="column" tabIndex="-1" role="main" class="md-whiteframe-z2">
+
+    <md-toolbar layout="row" class="md-whiteframe-z1" layout-align="center center">
+      <md-button class="md-icon-button menu" hide-gt-sm ng-click="ul.toggleList()" aria-label="Show User List">
+        <md-icon md-svg-icon="menu" ></md-icon>
+      </md-button>
+      <md-button ng-click="ul.toggleMode('bike')"
+                 title="Toggle bikes"
+                 ng-disabled="false"
+                 aria-label="Bikes"
+                 class="md-icon-button launch" >
+          <md-icon md-font-icon="icon-directions_bike"
+                   ng-style="{'font-size': '24px', height: '24px',color: 'ul.bikeColor'}"
+                   ng-class="md-accent"
+                   alt="print">
+          </md-icon>
+      </md-button>
+      <span flex></span>
+          <md-icon md-font-icon="icon-mode_comment"
+                   ng-style="{'font-size': '24px', height: '24px'}"
+                   ng-class="md-accent"
+                   ng-click="ul.test($event)"
+                   alt="print">
+          </md-icon>
+          <span flex="5"></span>
+    </md-toolbar>
+    <div layout="row" style="min-height:45px">
+    <h3 layout-margin>Ride Indego - Nearby Stations</h3>
+  </div>
+    <md-content layout="row" layout-align="start start" layout-margin class="md-whiteframe-z3" style="padding-bottom:10px;margin-bottom:5px;height:280px" layout-fill>
+<md-list style="min-width:470px" >
+
+  <md-list-item class="md-2-line md-no-sticky" ng-repeat="station in sortedIndego">
+    <!-- <img alt="{{ station.name }}" ng-src="assets/indego-light.png" class="md-avatar avatar" /> -->
+    <div layout-padding style="width:200px">
+      <br>
+      {{station.properties.name}}<br>
+      <small><strong>Station ID:</strong> {{station.properties.kioskId}}</small><br>
+      
+    </div>
+        <div class="md-list-item-text">
+          <div layout="row" layout-fill>
+            <span flex="5"></span>
+            <p style="font-size:1.1em;text-align:center">Bikes</p>
+                   <span flex="15"></span>
+                   <p style="font-size:1.1em">Docks</p>
+                 </div>
+          <div layout="row" layout-fill>
+            <md-button class="md-fab md-mini md-primary" aria-label="Eat cake">
+            <span style="padding-left:5px"> {{station.properties.bikesAvailable}}</span>
+        </md-button>
+        <span flex="10"></span>
+        <md-button class="md-fab md-mini md-accent md-hue-2" aria-label="Eat cake">
+            <span style="padding-left:5px"> {{station.properties.docksAvailable}}</span>
+        </md-button>
+            <!-- <md-icon md-font-icon="icon-mode_comment"
+                   ng-style="{'font-size': '24px', height: '24px'}"
+                   ng-class="md-accent"
+                   ng-click="ul.test($event)"
+                   alt="print"></md-icon>
+                   <span flex="25"></span>
+                   <md-icon md-font-icon="icon-mode_comment"
+                   ng-style="{'font-size': '24px', height: '24px'}"
+                   ng-class="md-accent"
+                   ng-click="ul.test($event)"
+                   alt="print"></md-icon> -->
+                 </div>
+        </div>
+  </md-list-item>
+</md-list>
+<span flex></span>
+
+
+</md-content>
+
+  <div id="map-canvas">
+</div>
+
+
+
+
+  </div>
+  
+  <div class="lock-size" layout="row" layout-align="center center">
+      <md-fab-speed-dial md-open="false" md-direction="up"
+                         ng-class="md-fling">
+        <md-fab-trigger>
+          <md-button aria-label="menu" class="md-fab md-warn">
+            <md-icon md-svg-icon="menu" ></md-icon>
+          </md-button>
+        </md-fab-trigger>
+        <md-fab-actions>
+          <md-button aria-label="twitter" class="md-fab md-raised md-mini">
+            <md-icon md-svg-src="img/icons/twitter.svg"></md-icon>
+          </md-button>
+        </md-fab-actions>
+      </md-fab-speed-dial>
+    </div>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBfdI61qNxrgQ2qqXXyIKjMbRdi19HkjtY&libraries=places"></script>
+
+    <script src="./bower_components/angular/angular.js"></script>
+    <script src="./bower_components/angular-animate/angular-animate.js"></script>
+    <script src="./bower_components/angular-aria/angular-aria.js"></script>
+    <script type="text/javascript" src="./bower_components/angular-material/angular-material.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.1.2/firebase.js"></script>
+    <!-- AngularFire -->
+    <script src="https://cdn.firebase.com/libs/angularfire/1.0.0/angularfire.min.js"></script>
+    <script src="./bower_components/rsvp/rsvp.min.js"></script>
+    <script src="./bower_components/geofire/dist/geofire.js"></script>
+    <script src="./bower_components/angular-new-router/dist/router.es5.js"></script>
+    <script type="text/javascript" src="./bower_components/angular-messages/angular-messages.min.js"></script>
+    
+    <script src="./src/lodash.js"></script>
+    <script src="./src/geolocationmarker-compiled.js"></script>
+
+    <script src="./src/users/Users.js"></script>
+    <script src="./src/users/mapController.js"></script>
+    <script src="./src/users/UserService.js"></script>
+
+    <script type="text/javascript">
+
+          angular
+              .module('starterApp', ['ngMaterial', 'users','firebase'])
+              .config(function($mdThemingProvider, $mdIconProvider){
+
+                  $mdIconProvider
+                      .defaultIconSet("./assets/svg/avatars.svg", 128)
+                      .icon("menu"       , "./assets/svg/menu.svg"        , 24)
+                      .icon("share"      , "./assets/svg/share.svg"       , 24)
+                      .icon("google_plus", "./assets/svg/google_plus.svg" , 512)
+                      .icon("hangouts"   , "./assets/svg/hangouts.svg"    , 512)
+                      .icon("twitter"    , "./assets/svg/twitter.svg"     , 512)
+                      .icon("phone"      , "./assets/svg/phone.svg"       , 512);
+
+                      $mdThemingProvider.definePalette('amazingPaletteName', {
+    '50': 'ffebee',
+    '100': 'ffcdd2',
+    '200': 'ef9a9a',
+    '300': 'e57373',
+    '400': 'ef5350',
+    '500': 'f44336',
+    '600': 'a2d40a',
+    '700': 'd32f2f',
+    '800': 'c62828',
+    '900': '1A237E',
+    'A100': 'ff8a80',
+    'A200': 'ff5252',
+    'A400': 'ff1744',
+    'A700': 'd50000',
+    'contrastDefaultColor': 'light',    // whether, by default, text (contrast)
+                                        // on this palette should be dark or light
+    'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
+     '200', '300', '400', 'A100'],
+    'contrastLightColors': undefined    // could also specify this if default was 'dark'
+  });
+                      $mdThemingProvider.theme('default')
+                          .primaryPalette('amazingPaletteName', {
+                            'default': '900', // by default use shade 400 from the pink palette for primary intentions
+                            'hue-1': '100', // use shade 100 for the <code>md-hue-1</code> class
+                            'hue-2': '600', // use shade 600 for the <code>md-hue-2</code> class
+                            'hue-3': 'A100' // use shade A100 for the <code>md-hue-3</code> class
+                          })
+                          .accentPalette('grey',{
+                            'default': '900', // by default use shade 400 from the pink palette for primary intentions
+                            'hue-1': '100', // use shade 100 for the <code>md-hue-1</code> class
+                            'hue-2': '600', // use shade 600 for the <code>md-hue-2</code> class
+                            'hue-3': 'A100' // use shade A100 for the <code>md-hue-3</code> class
+                          });
+
+                       $mdThemingProvider.theme('green')
+                          .primaryPalette('light-green', {
+                            'default': '600', // by default use shade 400 from the pink palette for primary intentions
+                            'hue-1': '100', // use shade 100 for the <code>md-hue-1</code> class
+                            'hue-2': '600', // use shade 600 for the <code>md-hue-2</code> class
+                            'hue-3': 'A100' // use shade A100 for the <code>md-hue-3</code> class
+                          })
+                          .accentPalette('grey',{
+                            'default': '900', // by default use shade 400 from the pink palette for primary intentions
+                            'hue-1': '100', // use shade 100 for the <code>md-hue-1</code> class
+                            'hue-2': '600', // use shade 600 for the <code>md-hue-2</code> class
+                            'hue-3': 'A100' // use shade A100 for the <code>md-hue-3</code> class
+                          });
+
+              });
+
+    </script>
+
+  </body>
+</html>
