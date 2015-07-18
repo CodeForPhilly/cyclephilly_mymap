@@ -70,11 +70,7 @@
     </md-list>
     <md-divider></md-divider>
 
-<<<<<<< HEAD
   <md-subheader class="md-no-sticky">Bike Layers</md-subheader>
-=======
-    <md-subheader class="md-no-sticky">Bike Layers</md-subheader>
->>>>>>> 70fb0ea6185f6b63a503b7e954d3f5f32f041bbe
 
   <md-list-item  ng-click="navigateTo(setting.extraScreen, $event)">
   <md-switch  ng-model="ul.layers.indego.enabled" class="md-primary"></md-switch>
@@ -84,11 +80,7 @@
   </md-list-item>
 
   <md-list-item  ng-click="navigateTo(setting.extraScreen, $event)">
-<<<<<<< HEAD
   <md-switch  ng-model="ul.layers.racks.enabled" ng-change="ul.onRackSwitch(ul.layers.racks.enabled)"  class="md-accent"></md-switch>
-=======
-  <md-switch  ng-model="ul.layers.racks.enabled" class="md-accent"></md-switch>
->>>>>>> 70fb0ea6185f6b63a503b7e954d3f5f32f041bbe
     <md-icon md-svg-icon="{{ul.layers.racks.icon}}"></md-icon>
     <p> {{ ul.layers.racks.name }} </p>
     
@@ -109,11 +101,7 @@
   <div flex layout="column" tabIndex="-1" role="main" class="md-whiteframe-z2">
 
     <md-toolbar layout="row" class="md-whiteframe-z1" layout-align="center center">
-<<<<<<< HEAD
       <md-button class="md-icon-button menu" hide-gt-sm ng-click="ul.toggleList()" aria-label="Show User List">
-=======
-      <md-button class="menu" hide-gt-sm ng-click="ul.toggleList()" aria-label="Show User List">
->>>>>>> 70fb0ea6185f6b63a503b7e954d3f5f32f041bbe
         <md-icon md-svg-icon="menu" ></md-icon>
       </md-button>
       <md-button ng-click="ul.toggleMode('bike')"
@@ -136,7 +124,6 @@
           </md-icon>
           <span flex="5"></span>
     </md-toolbar>
-<<<<<<< HEAD
     <div layout="row" style="min-height:45px">
     <h3 layout-margin>Ride Indego - Nearby Stations</h3>
   </div>
@@ -189,41 +176,18 @@
       <small><strong>Station ID:</strong> {{station.properties.kioskId}}</small><br>
       
     </div>
-=======
-    <div layout="row">
-    <h3 layout-margin>Ride Indego - Nearby Stations</h3>
-  </div>
-    <md-content layout="row" layout-align="start start" layout-margin class="md-whiteframe-z3" style="padding-bottom:10px;margin-bottom:5px;height:180px" layout-fill>
-<md-list style="min-width:420px" >
-
-  <md-list-item class="md-2-line md-no-sticky" ng-repeat="station in ul.sortedIndego">
-    <img alt="{{ station.name }}" ng-src="assets/indego-light.png" class="md-avatar" />
-    <span layout-padding>
-      <br>
-      {{station.properties.name}}
-    </span>
-    <span flex="5"></span>
->>>>>>> 70fb0ea6185f6b63a503b7e954d3f5f32f041bbe
         <div class="md-list-item-text">
           <div layout="row" layout-fill>
             <span flex="5"></span>
             <p style="font-size:1.1em;text-align:center">Bikes</p>
-<<<<<<< HEAD
                    <span flex="15"></span>
-=======
-                   <span flex="25"></span>
->>>>>>> 70fb0ea6185f6b63a503b7e954d3f5f32f041bbe
                    <p style="font-size:1.1em">Docks</p>
                  </div>
           <div layout="row" layout-fill>
             <md-button class="md-fab md-mini md-primary" aria-label="Eat cake">
             <span style="padding-left:5px"> {{station.properties.bikesAvailable}}</span>
         </md-button>
-<<<<<<< HEAD
         <span flex="10"></span>
-=======
-        <span flex="20"></span>
->>>>>>> 70fb0ea6185f6b63a503b7e954d3f5f32f041bbe
         <md-button class="md-fab md-mini md-accent md-hue-2" aria-label="Eat cake">
             <span style="padding-left:5px"> {{station.properties.docksAvailable}}</span>
         </md-button>

@@ -23,6 +23,7 @@
     self.cycleref = new Firebase("https://cyclephilly.firebaseio.com");
     self.loggedOut = true;
     self.user={};
+    self.bikshareKiosks = [];
     self.selectedItems = [];
     self.navIcon1 = "icon-directions_bike"
     self.IsActive = true;
@@ -188,8 +189,10 @@ self.mapStyle = [
   },{
   }
 ];
-self.styledMap = new google.maps.StyledMapType(self.mapStyle,
+    self.styledMap = new google.maps.StyledMapType(self.mapStyle,
     {name: "Philly Map"});
+
+    /* Weather Update */
     var weatherRef = new Firebase('https://publicdata-weather.firebaseio.com/washington/currently');
     var hourlyWeatherRef = new Firebase('https://publicdata-weather.firebaseio.com/washington/hourly');
     hourlyWeatherRef.child('summary').on('value', function(snapshot) {
@@ -204,9 +207,15 @@ self.styledMap = new google.maps.StyledMapType(self.mapStyle,
     weatherRef.child('temperature').on('value', function(snapshot) {
       // console.log('Temperature is currently ' + snapshot.val());
       self.weather.temperature = snapshot.val();
-  });
+    });
 
     self.showDetails = function(){
+      // var i = _.findIndex(self.bikshareKiosks,{$id: self.selectedIndego})
+      var i=_.findIndex(self.bikshareKiosks, function(chr) {
+            return chr.$id == self.selectedIndego;
+          });
+      var value = self.bikshareKiosks[i];
+
       $mdToast.show(
         $mdToast.simple()
         .content(value.properties.name+": "+value.properties.bikesAvailable+" bikes available! "+value.properties.docksAvailable+" docks available!")
@@ -229,6 +238,61 @@ self.styledMap = new google.maps.StyledMapType(self.mapStyle,
     }
     self.center = self.locations["philly"];
 
+    self.setupDestination=function(){
+      var placesInQuery = [];
+        self.onKeyEnteredDestination = self.destinationQuery.on("key_entered", function(key, location, distance) {
+          // self.bikeShares[key].setMap(self.map);
+
+          var dd=_.findIndex(self.bikshareKiosks, function(chr) {
+            return chr.$id == key;
+          });
+          placesInQuery.push({key:key,distance:distance,location:location});
+          
+          var fillcolor;
+          var fillopacity;
+              fillcolor = "#002369"
+              fillopacity= 0.1;
+          
+          var loc = new google.maps.LatLng(location[1],location[0])
+          self.bikeShares[key] = new google.maps.Marker({
+            position: loc,
+            icon: {
+              path: google.maps.SymbolPath.CIRCLE,
+              scale: 6,
+              fillColor: fillcolor,
+              fillOpacity: fillopacity,
+              strokeColor: self.indegoStrokeColor,
+            strokeOpacity: 0.8,
+            strokeWeight:2
+            },
+            draggable: false,
+            map: self.map
+          });
+          self.selectedIndego = +key;
+          google.maps.event.addListener(self.bikeShares[key], 'click', self.showDetails);
+          
+            $scope.destinationIndego = _.sortBy(placesInQuery, 'distance');
+          // console.log(self.bikeShares[key]);
+          self.bikeShares[key].setMap(self.map);
+        });
+
+        self.destinationQuery.on('key_exited', function(key, location, distance){
+          self.bikeShares[key].setMap(null);
+        })
+
+      google.maps.event.addListener(self.destinationWindow, "drag", self.updateDestination);
+    }
+
+    self.updateDestination = _.debounce(function() {
+      console.log(self.destinationWindow.getCenter())
+      var latLng = self.destinationWindow.getCenter();
+      self.destinationQuery.updateCriteria({
+        center: [latLng.lat(), latLng.lng()],
+        radius: 0.9
+      });
+      // self.onKeyEnteredDestination.cancel();
+    }, 25);
+
     self.mapCenter = new google.maps.LatLng(self.center[0],self.center[1]);
       var mapOptions = {
         zoom: 15,
@@ -237,12 +301,35 @@ self.styledMap = new google.maps.StyledMapType(self.mapStyle,
           mapTypeIds: [google.maps.MapTypeId.ROADMAP,'map_style']
         }
       };
+
+      self.destinationQuery = self.bikeFire.query({
+          center: [self.mapCenter.lng(),self.mapCenter.lat()],
+          radius: 0.5
+        });
+
+    
       if(self.map === undefined){
         self.map = new google.maps.Map(document.getElementById("map-canvas"),
           mapOptions);
         self.map.mapTypes.set('map_style', self.styledMap);
         self.map.setMapTypeId('map_style');
+        self.destinationWindow = new google.maps.Circle({
+          strokeColor: "#6D3099",
+          strokeOpacity: 0.7,
+          strokeWeight: 1,
+          fillColor: "#039BE5",
+          fillOpacity: 0.25,
+          map: self.map,
+          center: self.mapCenter,
+          radius: (500),
+          draggable: true
+        });
+        
+
+        
       }
+      
+
     self.crumbs = $firebaseArray(self.cycleref.child('anon').child('noid').child('crumbs'));
     function authDataCallback(authData) {
       if (authData) {
@@ -258,11 +345,11 @@ self.styledMap = new google.maps.StyledMapType(self.mapStyle,
 
       self.bikshareKiosks = $firebaseArray(self.ref.child('indego').child("kiosks"));
       self.bikeshareUnwatch = self.bikshareKiosks.$watch(function(){
-          var placesInQuery = [];
-          self.geoQuery = self.bikeFire.query({
-            center: [self.lng,self.lat],
-            radius: 0.5
-          });
+        var placesInQuery = [];
+        self.geoQuery = self.bikeFire.query({
+          center: [self.lng,self.lat],
+          radius: 0.5
+        });
 
         // self.geoQuery.on("key_entered", function(key, location, distance) {
         //   // Specify that the vehicle has entered this query
@@ -285,11 +372,15 @@ self.styledMap = new google.maps.StyledMapType(self.mapStyle,
       });
 
       self.bikshareKiosks.$loaded().then(function(){
-        
+      self.setupDestination();
       self.GeoMarker = new GeolocationMarker();
       self.GeoMarker.setCircleOptions({fillColor: '#808080'});
 
+      
+        
+        var placesInQuery = [];
 
+        
 
         google.maps.event.addListenerOnce(self.GeoMarker, 'position_changed', function() {
           self.map.setCenter(this.getPosition());
@@ -331,7 +422,68 @@ self.styledMap = new google.maps.StyledMapType(self.mapStyle,
         });
           self.lng = this.getPosition().lng();
           self.lat = this.getPosition().lat();
-            self.crumbs.$add({timestamp:Firebase.ServerValue.TIMESTAMP,lat:this.getPosition().lat(),lng:this.getPosition().lng()})
+
+            self.crumbs.$add({timestamp:Firebase.ServerValue.TIMESTAMP,lat:this.getPosition().lat(),lng:this.getPosition().lng()});
+
+            
+        // self.destinationQuery = self.bikeFire.query({
+        //   center: [self.mapCenter.lng(),self.mapCenter.lat()],
+        //   radius: 0.5
+        // });
+
+        self.destinationQuery.updateCriteria({
+            center: [self.lat, self.lng],
+            radius: 0.9
+          });
+
+        var placesInQuery = [];
+
+        self.onKeyEnteredDestination = self.destinationQuery.on("key_entered", function(key, location, distance) {
+          // self.bikeShares[key].setMap(self.map);
+          var dd=_.findIndex(self.bikshareKiosks, function(chr) {
+            return chr.$id == key;
+          });
+          placesInQuery.push({key:key,distance:distance,location:location,properties:self.bikshareKiosks[dd].properties});
+          
+          var fillcolor;
+          var fillopacity;
+          if(self.bikshareKiosks[dd].properties.bikesAvailable == 0){
+            fillcolor = "#FFFFFF";
+            fillopacity= 0.7;
+          }else{
+            if (self.bikshareKiosks[dd].properties.bikesAvailable <= 4) {
+              fillcolor = "#a2d40a";
+              fillopacity= 0.4;
+            }else{
+              fillcolor = "#002369"
+              fillopacity= self.bikshareKiosks[dd].properties.bikesAvailable/self.bikshareKiosks[dd].properties.totalDocks;
+            }
+            
+          }
+          var loc = new google.maps.LatLng(location[1],location[0])
+          self.bikeShares[key] = new google.maps.Marker({
+            position: loc,
+            icon: {
+              path: google.maps.SymbolPath.CIRCLE,
+              scale: 6,
+              fillColor: fillcolor,
+              fillOpacity: fillopacity,
+              strokeColor: self.indegoStrokeColor,
+            strokeOpacity: 0.8,
+            strokeWeight:2
+            },
+            draggable: false,
+            map: self.map
+          });
+          google.maps.event.addListener(self.bikeShares[key], 'click', self.showDetails);
+          
+          $scope.$apply(function(){
+            $scope.destinationIndego = _.sortBy(placesInQuery, 'distance');
+          })
+          // console.log(self.bikeShares[key]);
+          self.bikeShares[key].setMap(self.map);
+        });
+        
           /*************/
           /*  GEOQUERY */
           /*************/
