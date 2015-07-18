@@ -242,7 +242,10 @@ self.mapStyle = [
       var placesInQuery = [];
         self.onKeyEnteredDestination = self.destinationQuery.on("key_entered", function(key, location, distance) {
           // self.bikeShares[key].setMap(self.map);
-
+          var i=_.findIndex(self.bikshareKiosks, function(chr) {
+            return chr.$id == key;
+          });
+          var value = self.bikshareKiosks[i];
           var dd=_.findIndex(self.bikshareKiosks, function(chr) {
             return chr.$id == key;
           });
@@ -250,9 +253,19 @@ self.mapStyle = [
           
           var fillcolor;
           var fillopacity;
+          if(value.properties.bikesAvailable == 0){
+            fillcolor = "#FFFFFF";
+            fillopacity= 0.7;
+          }else{
+            if (value.properties.bikesAvailable <= 4) {
+              fillcolor = "#a2d40a";
+              fillopacity= 0.4;
+            }else{
               fillcolor = "#002369"
-              fillopacity= 0.1;
-          
+              fillopacity= value.properties.bikesAvailable/value.properties.totalDocks;
+            }
+            
+          }
           var loc = new google.maps.LatLng(location[1],location[0])
           self.bikeShares[key] = new google.maps.Marker({
             position: loc,
@@ -268,8 +281,20 @@ self.mapStyle = [
             draggable: false,
             map: self.map
           });
-          self.selectedIndego = +key;
-          google.maps.event.addListener(self.bikeShares[key], 'click', self.showDetails);
+          google.maps.event.addListener(self.bikeShares[key], 'click', function(){
+            var i=_.findIndex(self.bikshareKiosks, function(chr) {
+              return chr.$id == key;
+            });
+
+            $mdToast.show(
+              $mdToast.simple()
+              .content(value.properties.name+": "+value.properties.bikesAvailable+" bikes available! "+value.properties.docksAvailable+" docks available!")
+              .position('top right')
+              .hideDelay(4000)
+            );
+            self.selectedItems = [];
+            self.selectedItems.push(value);
+          });
           
             $scope.destinationIndego = _.sortBy(placesInQuery, 'distance');
           // console.log(self.bikeShares[key]);
@@ -284,14 +309,15 @@ self.mapStyle = [
     }
 
     self.updateDestination = _.debounce(function() {
-      console.log(self.destinationWindow.getCenter())
+      // console.log(self.destinationWindow.getCenter())
       var latLng = self.destinationWindow.getCenter();
+      
       self.destinationQuery.updateCriteria({
-        center: [latLng.lat(), latLng.lng()],
-        radius: 0.9
+        center: [latLng.lng(), latLng.lat()],
+        radius: 0.5
       });
       // self.onKeyEnteredDestination.cancel();
-    }, 25);
+    }, 40);
 
     self.mapCenter = new google.maps.LatLng(self.center[0],self.center[1]);
       var mapOptions = {
@@ -304,7 +330,7 @@ self.mapStyle = [
 
       self.destinationQuery = self.bikeFire.query({
           center: [self.mapCenter.lng(),self.mapCenter.lat()],
-          radius: 0.5
+          radius: 0.3
         });
 
     
@@ -401,7 +427,7 @@ self.mapStyle = [
             }
             
           }
-          var loc = new google.maps.LatLng(value.geometry.coordinates[1],value.geometry.coordinates[0])
+          var loc = new google.maps.LatLng(value.geometry.coordinates[1],value.geometry.coordinates[0]);
           self.bikeShares[value.$id] = new google.maps.Marker({
             position: loc,
             icon: {
@@ -416,74 +442,28 @@ self.mapStyle = [
             },
             draggable: false
           });
-          google.maps.event.addListener(self.bikeShares[value.$id], 'click', self.showDetails);
+          google.maps.event.addListener(self.bikeShares[value.$id], 'click', function(){
+            var i=_.findIndex(self.bikshareKiosks, function(chr) {
+              return chr.$id == value.$id;
+            });
+
+            $mdToast.show(
+              $mdToast.simple()
+              .content(value.properties.name+": "+value.properties.bikesAvailable+" bikes available! "+value.properties.docksAvailable+" docks available!")
+              .position('top right')
+              .hideDelay(4000)
+            );
+            self.selectedItems = [];
+            self.selectedItems.push(value);
+          });
           
           
         });
-          self.lng = this.getPosition().lng();
-          self.lat = this.getPosition().lat();
+        self.lng = this.getPosition().lng();
+        self.lat = this.getPosition().lat();
 
-            self.crumbs.$add({timestamp:Firebase.ServerValue.TIMESTAMP,lat:this.getPosition().lat(),lng:this.getPosition().lng()});
+        self.crumbs.$add({timestamp:Firebase.ServerValue.TIMESTAMP,lat:this.getPosition().lat(),lng:this.getPosition().lng()});
 
-            
-        // self.destinationQuery = self.bikeFire.query({
-        //   center: [self.mapCenter.lng(),self.mapCenter.lat()],
-        //   radius: 0.5
-        // });
-
-        self.destinationQuery.updateCriteria({
-            center: [self.lat, self.lng],
-            radius: 0.9
-          });
-
-        var placesInQuery = [];
-
-        self.onKeyEnteredDestination = self.destinationQuery.on("key_entered", function(key, location, distance) {
-          // self.bikeShares[key].setMap(self.map);
-          var dd=_.findIndex(self.bikshareKiosks, function(chr) {
-            return chr.$id == key;
-          });
-          placesInQuery.push({key:key,distance:distance,location:location,properties:self.bikshareKiosks[dd].properties});
-          
-          var fillcolor;
-          var fillopacity;
-          if(self.bikshareKiosks[dd].properties.bikesAvailable == 0){
-            fillcolor = "#FFFFFF";
-            fillopacity= 0.7;
-          }else{
-            if (self.bikshareKiosks[dd].properties.bikesAvailable <= 4) {
-              fillcolor = "#a2d40a";
-              fillopacity= 0.4;
-            }else{
-              fillcolor = "#002369"
-              fillopacity= self.bikshareKiosks[dd].properties.bikesAvailable/self.bikshareKiosks[dd].properties.totalDocks;
-            }
-            
-          }
-          var loc = new google.maps.LatLng(location[1],location[0])
-          self.bikeShares[key] = new google.maps.Marker({
-            position: loc,
-            icon: {
-              path: google.maps.SymbolPath.CIRCLE,
-              scale: 6,
-              fillColor: fillcolor,
-              fillOpacity: fillopacity,
-              strokeColor: self.indegoStrokeColor,
-            strokeOpacity: 0.8,
-            strokeWeight:2
-            },
-            draggable: false,
-            map: self.map
-          });
-          google.maps.event.addListener(self.bikeShares[key], 'click', self.showDetails);
-          
-          $scope.$apply(function(){
-            $scope.destinationIndego = _.sortBy(placesInQuery, 'distance');
-          })
-          // console.log(self.bikeShares[key]);
-          self.bikeShares[key].setMap(self.map);
-        });
-        
           /*************/
           /*  GEOQUERY */
           /*************/
@@ -496,7 +476,20 @@ self.mapStyle = [
             radius: 0.9
           });
 
+          var onKeyMovedRegistration = self.geoQuery.on("key_moved", function(key, location, distance) {
+            var i=_.findIndex(self.sortedIndego, function(chr) {
+              return chr.key == key;
+            });
+            $scope.sortedIndego[i].distance = distance;
+            $scope.$apply(function(){
+              $scope.sortedIndego = _.sortBy($scope.sortedIndego, 'distance');
+            });
+          });
+
           var onKeyEnteredRegistration = self.geoQuery.on("key_entered", function(key, location, distance) {
+            $scope.$apply(function(){
+              $scope.sortedIndego = _.sortBy(placesInQuery, 'distance');
+            });
           // Specify that the vehicle has entered this query
           // console.log(key+" "+distance+" "+location);
 
@@ -536,7 +529,21 @@ self.mapStyle = [
             draggable: false,
             map: self.map
           });
-          google.maps.event.addListener(self.bikeShares[key], 'click', self.showDetails);
+          google.maps.event.addListener(self.bikeShares[key], 'click', function(){
+            var i=_.findIndex(self.bikshareKiosks, function(chr) {
+              return chr.$id == key;
+            });
+            var value = self.bikshareKiosks[i];
+
+            $mdToast.show(
+              $mdToast.simple()
+              .content(value.properties.name+": "+value.properties.bikesAvailable+" bikes available! "+value.properties.docksAvailable+" docks available!")
+              .position('top right')
+              .hideDelay(4000)
+            );
+            self.selectedItems = [];
+            self.selectedItems.push(value);
+          });
           
           $scope.$apply(function(){
             $scope.sortedIndego = _.sortBy(placesInQuery, 'distance');
