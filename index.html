@@ -39,8 +39,39 @@
     </header>
     
 
-    <md-list>
-    <md-list-item ng-click="ul.logOut()" ng-hide="ul.loggedOut">
+    
+    <md-divider></md-divider>
+
+  <md-subheader class="md-no-sticky">Bike Layers</md-subheader>
+
+  <md-list-item  ng-click="navigateTo(setting.extraScreen, $event)">
+  <md-switch  ng-model="ul.layers.indego.enabled" class="md-primary"></md-switch>
+    <md-icon md-svg-icon="{{ul.layers.indego.icon}}"></md-icon>
+    <p> {{ ul.layers.indego.name }} </p>
+    
+  </md-list-item>
+
+  <md-list-item >
+  <md-switch ng-change="ul.toggleRoutes(ul.layers.routes.enabled)"  ng-model="ul.layers.routes.enabled" class="md-primary md-hue-2"></md-switch>
+    <md-icon md-svg-icon="{{ul.layers.routes.icon}}"></md-icon>
+    <p> {{ ul.layers.routes.name }} </p>
+    
+  </md-list-item>
+
+  <md-list-item  ng-click="navigateTo(setting.extraScreen, $event)">
+  <md-switch  ng-model="ul.layers.racks.enabled" ng-change="ul.onRackSwitch(ul.layers.racks.enabled)"  class="md-accent"></md-switch>
+    <md-icon md-svg-icon="{{ul.layers.racks.icon}}"></md-icon>
+    <p> {{ ul.layers.racks.name }} </p>
+    
+  </md-list-item>
+
+  
+  
+  <md-divider></md-divider>
+  <md-subheader class="md-no-sticky">My Trips</md-subheader>
+
+  <md-list>
+    <!-- <md-list-item ng-click="ul.logOut()" ng-hide="ul.loggedOut">
 
     <md-icon md-font-icon="icon-exit"
                    ng-style="{'font-size': '24px', height: '24px'}"
@@ -51,7 +82,7 @@
     <img ng-src="{{ul.user.image}}" ng-style="{height: '24px'}" />
 <md-divider></md-divider>
     
-  </md-list-item>
+  </md-list-item> -->
   
   <md-list-item ng-repeat="set in ul.user.favorites | limitTo:3" ng-click="goToDatSet(set.name, $event)">
     <img alt="{{ set.name }}" ng-src="{{ set.img }}" class="md-avatar" />
@@ -68,33 +99,6 @@
     
   </md-list-item>
     </md-list>
-    <md-divider></md-divider>
-
-  <md-subheader class="md-no-sticky">Bike Layers</md-subheader>
-
-  <md-list-item  ng-click="navigateTo(setting.extraScreen, $event)">
-  <md-switch  ng-model="ul.layers.indego.enabled" class="md-primary"></md-switch>
-    <md-icon md-svg-icon="{{ul.layers.indego.icon}}"></md-icon>
-    <p> {{ ul.layers.indego.name }} </p>
-    
-  </md-list-item>
-
-  <md-list-item  ng-click="navigateTo(setting.extraScreen, $event)">
-  <md-switch  ng-model="ul.layers.racks.enabled" ng-change="ul.onRackSwitch(ul.layers.racks.enabled)"  class="md-accent"></md-switch>
-    <md-icon md-svg-icon="{{ul.layers.racks.icon}}"></md-icon>
-    <p> {{ ul.layers.racks.name }} </p>
-    
-  </md-list-item>
-
-  <md-list-item  ng-click="navigateTo(setting.extraScreen, $event)">
-  <md-switch  ng-model="ul.layers.routes.enabled" class="md-primary md-hue-2"></md-switch>
-    <md-icon md-svg-icon="{{ul.layers.routes.icon}}"></md-icon>
-    <p> {{ ul.layers.routes.name }} </p>
-    
-  </md-list-item>
-  
-  <md-divider></md-divider>
-  <md-subheader class="md-no-sticky">My Trips</md-subheader>
   </md-sidenav>
 
 
@@ -127,7 +131,7 @@
     <div layout="row" style="min-height:45px">
     <h3 layout-margin>Ride Indego - Nearby Stations</h3>
   </div>
-    <md-content layout="row" layout-align="start start" layout-margin class="md-whiteframe-z3" style="padding-bottom:10px;margin-bottom:5px;height:280px" layout-fill>
+    <md-content layout="row" layout-align="start start" layout-margin class="md-whiteframe-z3" style="padding-bottom:10px;margin-bottom:5px;height:280px;background-color: #EFEFEF;" layout-fill>
 <md-list style="min-width:470px" >
   
   <md-list-item class="md-2-line md-no-sticky" ng-repeat="station in selectedItems">
@@ -174,6 +178,7 @@
       <br>
       {{station.properties.name}}<br>
       <small><strong>Station ID:</strong> {{station.properties.kioskId}}</small><br>
+      <small>{{station.distance}}m away</small><br>
       
     </div>
         <div class="md-list-item-text">
@@ -277,7 +282,7 @@
     '300': 'e57373',
     '400': 'ef5350',
     '500': 'f44336',
-    '600': 'a2d40a',
+    '600': '00ff00',
     '700': 'd32f2f',
     '800': 'c62828',
     '900': '1A237E',

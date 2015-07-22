@@ -38,6 +38,21 @@
     self.locations = {
       "philly": [39.9620048,-75.1695314]
     };
+
+    self.toggleRoutes = function(cbState){
+      $mdToast.show(
+        $mdToast.simple()
+        .content('Bike Routes toggled')
+        .position('top right')
+        .hideDelay(4000)
+      );
+      if(cbState == true){
+        self.bikeNetwork.setMap(self.map);
+      }else{
+        self.bikeNetwork.setMap(null);
+      }
+      
+    }
     $scope.sortedRacks = [];
     $scope.sortedIndego = [
   {
@@ -105,6 +120,14 @@ self.mapStyle = [
     "stylers": [
       { "visibility": "simplified" },
       { "invert_lightness": true }
+    ]
+  },{
+    "featureType": "landscape",
+    "elementType": "geometry.fill",
+    "stylers": [
+      { "visibility": "on" },
+      { "lightness": 100 },
+      { "color": "#f9fff9" }
     ]
   },{
     "featureType": "road",
@@ -189,6 +212,19 @@ self.mapStyle = [
   },{
   }
 ];
+
+self.bikeNetwork = new google.maps.FusionTablesLayer({
+      query: {
+      select: 'geometry',
+      from: '10UB5kDsI5ilPwgluQhzLokLTdcQsIK205gaHX5b3'
+      },
+      styles: [{
+      polylineOptions: {
+        strokeColor: "#00ff00",
+        strokeOpacity: "0.5",
+        strokeWeight: 6
+      }}]
+    });
     self.styledMap = new google.maps.StyledMapType(self.mapStyle,
     {name: "Philly Map"});
 
@@ -249,7 +285,8 @@ self.mapStyle = [
           var dd=_.findIndex(self.bikshareKiosks, function(chr) {
             return chr.$id == key;
           });
-          placesInQuery.push({key:key,distance:distance,location:location});
+          var d = _.round(distance*1000,2);
+          placesInQuery.push({key:key,distance:d,location:location});
           
           var fillcolor;
           var fillopacity;
@@ -350,6 +387,7 @@ self.mapStyle = [
           radius: (500),
           draggable: true
         });
+        self.bikeNetwork.setMap(self.map);
         
 
         
@@ -480,7 +518,8 @@ self.mapStyle = [
             var i=_.findIndex(self.sortedIndego, function(chr) {
               return chr.key == key;
             });
-            $scope.sortedIndego[i].distance = distance;
+            var d = _.round(distance*1000,2);
+            $scope.sortedIndego[i].distance = d;
             $scope.$apply(function(){
               $scope.sortedIndego = _.sortBy($scope.sortedIndego, 'distance');
             });
@@ -497,7 +536,8 @@ self.mapStyle = [
           var dd=_.findIndex(self.bikshareKiosks, function(chr) {
             return chr.$id == key;
           });
-          placesInQuery.push({key:key,distance:distance,location:location,properties:self.bikshareKiosks[dd].properties});
+          var d = _.round(distance*1000,2);
+          placesInQuery.push({key:key,distance:d,location:location,properties:self.bikshareKiosks[dd].properties});
           
           var fillcolor;
           var fillopacity;
@@ -867,6 +907,8 @@ self.mapStyle = [
         $mdSidenav('left').toggle();
       });
     }
+
+    
 
     /**
      * Select the current avatars
