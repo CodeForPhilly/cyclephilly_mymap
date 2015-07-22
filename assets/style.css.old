@@ -1,0 +1,133 @@
+@font-face {
+	font-family: 'icomoon';
+	src:url('fonts/icomoon.eot?-u4uq5c');
+	src:url('fonts/icomoon.eot?#iefix-u4uq5c') format('embedded-opentype'),
+		url('fonts/icomoon.ttf?-u4uq5c') format('truetype'),
+		url('fonts/icomoon.woff?-u4uq5c') format('woff'),
+		url('fonts/icomoon.svg?-u4uq5c#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-mode_comment:before {
+	content: "\e0ed";
+}
+.icon-phone_iphone:before {
+	content: "\e120";
+}
+.icon-directions_bike:before {
+	content: "\e1c9";
+}
+.icon-directions_bus:before {
+	content: "\e1ca";
+}
+.icon-directions_car:before {
+	content: "\e1cb";
+}
+.icon-directions_ferry:before {
+	content: "\e1cc";
+}
+.icon-directions_subway:before {
+	content: "\e1cd";
+}
+.icon-directions_railway:before {
+	content: "\e1ce";
+}
+.icon-directions_walk:before {
+	content: "\e1d0";
+}
+.icon-flight:before {
+	content: "\e1d1";
+}
+.icon-local_airport:before {
+	content: "\e1d5";
+}
+.icon-time_to_leave:before {
+	content: "\e230";
+}
+.icon-folder-upload:before {
+	content: "\e934";
+}
+.icon-qrcode:before {
+	content: "\e938";
+}
+.icon-phone:before {
+	content: "\e942";
+}
+.icon-envelop:before {
+	content: "\e945";
+}
+.icon-location:before {
+	content: "\e947";
+}
+.icon-location2:before {
+	content: "\e948";
+}
+.icon-compass:before {
+	content: "\e949";
+}
+.icon-compass2:before {
+	content: "\e94a";
+}
+.icon-map:before {
+	content: "\e94b";
+}
+.icon-map2:before {
+	content: "\e94c";
+}
+.icon-box-add:before {
+	content: "\e95e";
+}
+.icon-box-remove:before {
+	content: "\e95f";
+}
+.icon-bubbles:before {
+	content: "\e96c";
+}
+.icon-bubbles3:before {
+	content: "\e96f";
+}
+.icon-cloud-download:before {
+	content: "\e9c2";
+}
+.icon-cloud-upload:before {
+	content: "\e9c3";
+}
+.icon-star-empty:before {
+	content: "\e9d7";
+}
+.icon-heart:before {
+	content: "\e9da";
+}
+.icon-enter:before {
+	content: "\ea13";
+}
+.icon-exit:before {
+	content: "\ea14";
+}
+.icon-new-tab:before {
+	content: "\ea7e";
+}
+.icon-share2:before {
+	content: "\ea82";
+}
+.icon-github:before {
+	content: "\eab1";
+}
+.icon-github4:before {
+	content: "\eab4";
+}
