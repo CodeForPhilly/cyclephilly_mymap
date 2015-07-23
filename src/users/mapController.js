@@ -229,8 +229,8 @@ self.bikeNetwork = new google.maps.FusionTablesLayer({
     {name: "Philly Map"});
 
     /* Weather Update */
-    var weatherRef = new Firebase('https://publicdata-weather.firebaseio.com/washington/currently');
-    var hourlyWeatherRef = new Firebase('https://publicdata-weather.firebaseio.com/washington/hourly');
+    var weatherRef = new Firebase('https://publicdata-weather.firebaseio.com/philadelphia/currently');
+    var hourlyWeatherRef = new Firebase('https://publicdata-weather.firebaseio.com/philadelphia/hourly');
     hourlyWeatherRef.child('summary').on('value', function(snapshot) {
         //console.log('Temperature is currently ' + snapshot.val());
         self.weather ={};
