@@ -16,7 +16,9 @@
    */
   function UserController( userService, $mdSidenav,$mdToast, $mdBottomSheet, $log, $q,$rootScope,$scope,$firebaseArray,$firebaseObject,$http) {
     var self = this;
+    self.currentWeatherIcon="icon-looks_5";
     self.mapLoading = true;
+    self.weather = {};
     self.ref = new Firebase("https://phl.firebaseio.com");
     self.bikeFire = new GeoFire(self.ref.child("indego").child('_geofire'));
     self.racksFire = new GeoFire(self.ref.child("racks").child('_geofire'));
@@ -229,17 +231,16 @@ self.bikeNetwork = new google.maps.FusionTablesLayer({
     {name: "Philly Map"});
 
     /* Weather Update */
-    var weatherRef = new Firebase('https://publicdata-weather.firebaseio.com/philadelphia/currently');
-    var hourlyWeatherRef = new Firebase('https://publicdata-weather.firebaseio.com/philadelphia/hourly');
-    hourlyWeatherRef.child('summary').on('value', function(snapshot) {
+    var weatherRef = new Firebase('https://publicdata-weather.firebaseio.com/philadelphia');
+    weatherRef.child("hourly").on('value', function(snapshot) {
         //console.log('Temperature is currently ' + snapshot.val());
-        self.weather ={};
-        self.weather.icon = 'icon-cloudy';
-        self.weather.temperatureicon = {name: 'icon-Fahrenheit'   , color: "rgb(0,0,0)" }
-        self.weather.message = snapshot.val();
-        self.weather.style = "weather-style";
-        console.log(self.weather)
+        self.weather = snapshot.val();
+        console.log(self.weather.summary);
     });
+
+    
+
+
     weatherRef.child('temperature').on('value', function(snapshot) {
       // console.log('Temperature is currently ' + snapshot.val());
       self.weather.temperature = snapshot.val();
