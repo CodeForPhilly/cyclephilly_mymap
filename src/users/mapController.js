@@ -383,7 +383,7 @@ self.bikeNetwork = new google.maps.FusionTablesLayer({
           strokeWeight: 1,
           fillColor: "#039BE5",
           fillOpacity: 0.25,
-          map: self.map,
+          // map: self.map,
           center: self.mapCenter,
           radius: (500),
           draggable: true
@@ -437,12 +437,9 @@ self.bikeNetwork = new google.maps.FusionTablesLayer({
       });
 
       self.bikshareKiosks.$loaded().then(function(){
-      self.setupDestination();
+      // self.setupDestination();
       self.GeoMarker = new GeolocationMarker();
       self.GeoMarker.setCircleOptions({fillColor: '#808080'});
-
-      
-        
         var placesInQuery = [];
 
         
@@ -479,7 +476,8 @@ self.bikeNetwork = new google.maps.FusionTablesLayer({
             strokeWeight:2,
 
             },
-            draggable: false
+            draggable: false,
+            map:self.map
           });
           google.maps.event.addListener(self.bikeShares[value.$id], 'click', function(){
             var i=_.findIndex(self.bikshareKiosks, function(chr) {

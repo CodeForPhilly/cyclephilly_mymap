@@ -25,6 +25,13 @@ html, body {
   height: 24px;
 }
 
+.weather-text{
+  white-space: nowrap;
+    width: 12em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .menu {
   background-color: transparent;
   border: none;
