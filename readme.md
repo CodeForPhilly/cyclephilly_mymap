@@ -4,7 +4,7 @@ My Map
 Get Started
 ===========
 - Install the `http-server` Node module
-- Install the node_modules
+- Install the `node_modules`
 
 How to Run
 ==========
@@ -27,6 +27,7 @@ $ http-server
 Starting up http-server, serving ./ on: http://0.0.0.0:8080
 Hit CTRL-C to stop the server
 ...
+
 $ npm install
 geofire@3.2.2 node_modules/geofire
 ├── rsvp@3.0.21
