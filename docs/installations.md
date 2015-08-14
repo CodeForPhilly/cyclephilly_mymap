@@ -1,3 +1,7 @@
+Application Installation Requirements
+=====================================
+In order for this application to work you must install these components. <br />
+
 #### Install Local Server
 ```
 $ sudo npm install http-server -g
