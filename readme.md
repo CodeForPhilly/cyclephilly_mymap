@@ -4,10 +4,11 @@ My Map
 Get Started
 ===========
 - Install the `http-server` Node module
+- Install the node_modules
 
 How to Run
 ==========
-Before running this application, install the Node module http-server by typing `npm install http-server -g`. Once installed type `http-server`, when in the root directory, to start the Node server.
+Before running this application, install the Node module http-server by typing `npm install http-server -g`. Once installed type `http-server`, when in the root directory, to start the Node server. After install the local server, install the Geofire Node module by typing `npm install`.
 ```
 $ sudo npm install http-server -g
 password: ****
@@ -26,6 +27,10 @@ $ http-server
 Starting up http-server, serving ./ on: http://0.0.0.0:8080
 Hit CTRL-C to stop the server
 ...
+$ npm install
+geofire@3.2.2 node_modules/geofire
+├── rsvp@3.0.21
+└── firebase@2.2.9 (faye-websocket@0.9.3)
 ```
 
 License
