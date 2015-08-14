@@ -1,0 +1,219 @@
+@charset 'utf-8';
+
+* {
+  box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+  -o-box-sizing:border-box;
+}
+
+*:before,
+*:after {
+  box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+  -o-box-sizing:border-box;
+}
+
+html, body {
+  font-family:'Roboto', sans-serif;
+  font-size:14px;
+  height:100%;
+  margin:0px;
+  padding:0px;
+}
+
+/* Toolbar area */
+.nav-header {
+  border-bottom:1px solid #267ED5;
+  flex-shrink:0;
+  z-index:2;
+}
+
+/* Toolbar area header content block (line 35) */
+.logo-container {
+  background:transparent;
+  display:block;
+  height:50px;
+  width:50px
+}
+
+.logo { /* CSS background img(s) load faster
+         * than HTML img element tags.
+         * -----------------------------------
+         * Base64 is encoding that gets rid of
+         * the extra HTTP request when loading
+         * the img. Best for optimizing load time. */
+  background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHoAAACDCAMAAAB1Gv8HAAAAe1BMVEUAAAAea7EcfLgea7Ebf7oea7Ebgboea7Eea7Eea7Eea7EZl8Qea7Eea7Eea7Eea7Eea7EPpsoPpsoiib0iib0PpsoPpsoPpsoiib0iib0iib0iib0PpsoPpsoiib0iib0iib0PpsoPpsoPpsoiib0iib0ea7Eiib0PpsqkdMo+AAAAJnRSTlMAQBC/IO8w34CfYEDPr1Bwj9+fn+/vzGBg38+vcK+PcFCPgFCAv5LTk9YAAAXNSURBVGje7JbZcuIwEEUVoVEmo5rFYPbNGAfz/184i2tKwXL6GMn4IZXzDL5GR/RtlcB5v9gZNT52Or/+Zb/UakzMKbt6pmc1Enq3uLaYn6x6PMv9tZPswdpdI/gdFg/TbhvBIvsHaDeNYGY+HVS7bgkGsnIo7edAMLPY6QEEC7my9mWa4Ew82NNyIWt3kYLhuc0MMyW8nY0QDKepb6a5wH0Vww+LeVGGjzBOT7Jgl3Aprdj9cG5Rs5YrxpFgHTOAuGIMvG5phhu7XnvY/emFYPCJ8I5JNWj5HB2ZeRdzWNezInqxKLujeeXRx039j3xmaZ3i6P6Lnl5t6zesKwNLJEX3XW+LWV632aw0rM4UzRPX/hHczbaAVhCiuWdMIzjkv3YnjkopOpMFv9bI+mCwIMLoOQiue7I5aqwYH82C8/oetisN214TTdVgjmsOC7UXYsU00dnJSIKFi0Xarai9VBLFFs7VHXJZu1Ex2Bk8VsP9A+1SNfB/yI9VCa+d0Tg57p01jXak8zfwvLRwTqjdgWDRXBH7ZX7xyqAqPLKoarARFwWeE3FJAYOn19fRa+CIcX2Ggj7kdDPjIO1OORjDSGwBVMpB+aRhqjVEJ81e7gKITm4cWHEwOl0wL3Y+GqohAt52fLQXrAaAdjwfjZvkwNpzHw3VEAFWjI/makgnrKpKWV9kY2IPK/WJxNP3yQ0vRo3Ej0ubL2NlTy4BX1UnHyn6Vxj9pMZBv7RVfwsu4lusGppJE6tVgH2+3DBRQNw9/wmXIfxQOs0ve1Yd/C7OypIch0FoaV9KknWKvv8RZ0kIsZBBycg1/HTFcQQIeA9okgp1q+bI5Fe4tQCsQ3dEzHFb2T+xKGbjQ+oNTityJpsPO6U8ztSL+bBRjseZTYAe901VbznzCXr2BhA/FCv5hhzzPx9I0DeRpix5p+b8kdNbcywsaoUq2Are/ynW9i2M6lrCDdRRlzqAdkO3qkgcxXyoexuE5x8hH+o+DEdCAObiyRwM3QvelYkjftl2tWZICOgYS+bYtW5rEAQuhmvGUkxfXHCL3fyWeCgE76DfkrgwZD5Y6HNMxpgasxfBo5dTQ5uPEyFAHDkyx08qvdebS42doX/mYtjpA/NBIJuQpbGKih8gtU/JPMoUG9QUB92l5kSaFc9MYnxj0TUzxVJxnm3R8tggaK6xKDRaICH9zUatjkr6DqJnao0uqKcr+ydOKpbBEarZtDkhKNKOE6BFzVOysWlK5wc8bBS80VSKMVMEqVe9koVvCs2KqikhgBRaSfMcO5h5M0OujQNqmhKCL3gIiS1FGQvZMSUb787RiaB5Dt4QcjsLLuFIA2loHXNqOHlR5tMdxiNRrkAzhqP7JdkgMuMHe0EIeIglF0J5tIIbc7JBPnrzITKEAK+MaaDJtG/RU5IG9BUPxzCEkMHSoaBIz3Sc0MUwR6fXbSaeEBwYcs60MEKEgUCKZBNebyt+NddHlA7z/vjxM4ZsMHwWHILHF0Dd0HxCyWZ0qAr7gA4G45fMLzQ+IJQczEvK+CCAD9Sx+CyUJK1iQPWOWV+halJaExwKpET718O+Z1RDjo3362hUZKG1rRnVhrw9y4jjA9V2duF2lmaGFONFpspC1/bo7dJ0ptZGV8hZXiKEv6zs2I61ZYFe8qNC/SR5MAT71OIo7gX7AMSaYCmCsVsdS/vCIqxikSj5xCSrbgsDbsBKT6Lbfn0dFkS3I1hHCZKKxl5JlENapfgTVBrBqUTAUFx/OMu5gRVloctnNZuPtqlFs5rjwFSuMZr5iqFsWjyjmfQ1s/SwhRCAeOWXjihH71eH+dyvI9BT+mJrb9TZizqnUAePQ3yZ1NLrafpueW6yBSdyvdrU+/JGNCbFaOCBoFlaUATTYzeB+x+BNiLRr4sP1wSqZmhA2g4mVwXRV1xe9Zwk0szKL5edyrALJKq8u8HjrL9fcabR4yb8IBr3VFsP+49L5dbBd5OIE78ARs8hR7n5t8UAAAAASUVORK5CYII=');
+  background-attachment:relative;
+  background-repear:no-repeat;
+  background-size:cover;
+  display:inline-block;
+  cursor:pointer;
+  height:100%;
+  margin:0;
+  width:100%
+}
+
+.logo-h2 {
+  cursor:default !important;
+}
+
+.logo-temp-wrapper,
+.logo-temp-wrapper > p,
+.logo-temp-wrapper > p > span {
+  cursor:default !important;
+  margin:0;
+  padding:0;
+}
+
+
+
+#map-canvas {
+  height: 500px;
+  margin: 0px;
+  padding: 0px
+}
+
+.transIcon{
+  font-size: 24px;
+  height: 24px;
+}
+
+.weather-text{
+  white-space: nowrap;
+    width: 12em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.menu {
+  background-color: transparent;
+  border: none;
+  height: 38px;
+  margin: 16px;
+  width: 36px;
+}
+
+md-toolbar h1 {
+  margin: auto;
+}
+
+/* Sidenav area */
+
+md-list .md-button {
+  color: inherit;
+  font-weight: 500;
+  text-align: left;
+  width: 100%;
+}
+  md-list .md-button.selected {
+    color: #03a9f4;
+  }
+
+  md-sidenav  md-list {
+    padding: 0px 0px 8px 0px;
+  }
+
+
+/* Primary content area */
+
+#content {
+  overflow: hidden;
+}
+
+#content  {
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 5px;
+}
+
+#content .md-button.contact {
+  background-color: transparent;
+  border: none;
+  width: 48px;
+  height: 48px;
+  margin: 8px auto 16px 0;
+  position: absolute;
+  top: 10px;
+  right: 40px;
+}
+
+#content md-icon.avatar {
+  margin-top: 10px;
+}
+
+#content .md-button.contact > md-icon {
+  fill:black;
+  width:36px;
+  height:36px;
+}
+
+md-button.menuBtn > md-icon {
+  fill:white;
+  width:24px;
+  height:24px;
+}
+
+#content .md-button.contact:active > md-icon {
+  background-color: #dadada;
+  border-radius: 75%;
+  padding:4px;
+  transition: all 100ms ease-out 30ms;
+}
+
+#content img {
+  display: block;
+  height: auto;
+  max-width: 500px;
+}
+
+/* Utils */
+
+.content-wrapper {
+  position: relative;
+}
+
+/* Typography support coming in 0.8.0 */
+
+md-toolbar h1 {
+  font-size: 1.250em;
+  font-weight: 400;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  /* margin-right: 16px; */
+  border-radius: 50%;
+  box-sizing: content-box;
+  position: relative;
+ 
+  transform: translateZ(0);
+  -webkit-transform: scale(0.70);
+  -moz-transform:scale(0.70);
+}
+
+
+md-bottom-sheet  md-icon {
+  margin-right:20px;
+}
+
+span.name {
+  font-weight: bold;
+  font-size:1.1em;
+  padding-left:5px;
+}
+
+.text-capitalize {
+  text-transform: capitalize; }
+.md-fab:hover, .md-fab.md-focused {
+  background-color: #000 !important; }
+p.note {
+  font-size: 1.2rem; }
+.lock-size {
+  
+  position: absolute;
+  bottom: 17px;
+  right: 17px;
+  z-index: 33000; }

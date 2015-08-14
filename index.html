@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html class="no-js" lang="en" >
+<html class="no-js" lang="en">
   <head>
-    <title>Cycle_ Map</title>
-
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="description" content="">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <title>Cycle_ Map</title>
+    
+    <!-- <link rel="stylesheet" href="assets/icomoon/style.css"> -->
 
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
-    <link rel="stylesheet" href="./bower_components/angular-material/angular-material.css"/>
-    <!-- <link rel="stylesheet" href="assets/icomoon/style.css"> -->
-    <link rel="stylesheet" href="assets/app.css"/>
-    <link rel="stylesheet" href="assets/style.css"/>
+    <link rel="stylesheet" href="./bower_components/angular-material/angular-material.min.css">
+    <link rel="stylesheet" href="assets/css/app.css" media="all">
+    <link rel="stylesheet" href="assets/css/style.css" media="all">
 		
     <style type="text/css">
      /** {outline:1px solid red}*/
@@ -29,30 +30,35 @@
 
   <body ng-app="starterApp" layout="row" ng-controller="UserController as ul" ng-cloak>
 
-  <md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2"
-                md-component-id="left"
-                md-is-locked-open="$mdMedia('gt-sm')">
-    <header class="nav-header md-whiteframe-z2" layout="column" layout-align="center center" layout-padding>
-      <a ng-href="/" class="docs-logo" href="/">
-        <img src="assets/cycle-logo.png" style="width:50px">
-        
-      </a>
-      <h2 class="docs-logotype md-heading">CyclePhilly</h2>
+  <md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
+
+    <header role="banner" class="nav-header md-whiteframe-z2" layout="column" layout-align="center center" layout-padding>
+      <div class="logo-container"><figure class="logo" id="logo"></figure></div>
+      <script>/* <![CDATA[ *//* Event Listener Reload Window */
+        ;(function(window, document) {
+          'use strict';
+          var document = window.document;
+          document.getElementById('logo')
+            .addEventListener('click', function(event) {
+              window.location.href = '/';
+            });
+        })(this, document, 0);
+      /* ]]> */</script>
+      <h2 class="logo-h2 md-heading">CyclePhilly</h2>
       <div layout="row">
         <md-icon md-font-icon="{{ul.weather.icon.name}}"
-           ng-style="{color: ul.weather.icon.color }"
+           ng-style="{color: ul.weather.icon.color}"
            ng-class="md-warn"
            alt="weather Icon"
            class="step ">
         </md-icon>
-        <span>{{ul.weather.temperature}} &deg;</span>
-        
+        <section class="logo-temp-wrapper"><p>
+            <span>{{ul.weather.temperature}}</span>
+            <span>&deg;</span>
+        </p></section>
       </div>
     </header>
-    
-
-    
-    <md-divider></md-divider>
+    <md-divider><!-- decorative marker --></md-divider>
 
   <md-subheader class="md-no-sticky">Bike Layers</md-subheader>
 

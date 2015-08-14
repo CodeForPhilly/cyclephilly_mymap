@@ -230,21 +230,22 @@ self.bikeNetwork = new google.maps.FusionTablesLayer({
     self.styledMap = new google.maps.StyledMapType(self.mapStyle,
     {name: "Philly Map"});
 
-    /* Weather Update */
-    var weatherRef = new Firebase('https://publicdata-weather.firebaseio.com/philadelphia');
-    weatherRef.child("hourly").on('value', function(snapshot) {
-        //console.log('Temperature is currently ' + snapshot.val());
+
+    /* Weather Update *//*
+     * Query weather the current weather data in Philadelphia from the database.
+     * Once that data has been successfully queried, place that data in the
+     * scope and call those variables inside the view file(s) (ie index.html).
+     *//*  */
+
+    var weatherData = 'https://publicdata-weather.firebaseio.com/philadelphia',
+        weatherRef  = new Firebase(weatherData);
+
+    weatherRef.child('currently').on('value', function(snapshot) {
         self.weather = snapshot.val();
-        console.log(self.weather.summary);
     });
-
     
+    /* ====================== End of Weather Update ===================== */
 
-
-    weatherRef.child('temperature').on('value', function(snapshot) {
-      // console.log('Temperature is currently ' + snapshot.val());
-      self.weather.temperature = snapshot.val();
-    });
 
     self.showDetails = function(){
       // var i = _.findIndex(self.bikshareKiosks,{$id: self.selectedIndego})
