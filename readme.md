@@ -4,8 +4,6 @@ My Map
 Get Started
 ===========
 - Install the `http-server` Node module
--
--
 
 How to Run
 ==========
@@ -24,6 +22,10 @@ http-server@0.8.0 /usr/local/lib/node_modules/http-server
 ├── union@0.4.4 (qs@2.3.3)
 ├── portfinder@0.4.0 (async@0.9.0, mkdirp@0.5.1)
 └── ecstatic@0.7.6 (url-join@0.0.1, mime@1.3.4, minimist@1.1.3, he@0.5.0)
+$ http-server
+Starting up http-server, serving ./ on: http://0.0.0.0:8080
+Hit CTRL-C to stop the server
+...
 ```
 
 License
