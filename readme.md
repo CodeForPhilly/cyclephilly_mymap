@@ -10,6 +10,8 @@ Get Started
 How to Run
 ==========
 Before running this application, install the Node module http-server by typing `npm install http-server -g`. Once installed type `http-server`, when in the root directory, to start the Node server. After install the local server, install the Geofire Node module by typing `npm install`. Finally, install the bower components by typing `bower install`.
+
+#### Install Local Server
 ```
 $ sudo npm install http-server -g
 password: ****
@@ -29,12 +31,18 @@ $ http-server
 Starting up http-server, serving ./ on: http://0.0.0.0:8080
 Hit CTRL-C to stop the server
 ...
+```
 
+#### Install Node Modules
+```
 $ npm install
 geofire@3.2.2 node_modules/geofire
 ├── rsvp@3.0.21
 └── firebase@2.2.9 (faye-websocket@0.9.3)
+```
 
+#### Install Bower
+```
 $ npm install -g bower
 /usr/local/bin/bower -> /usr/local/lib/node_modules/bower/bin/bower
 bower@1.4.1 /usr/local/lib/node_modules/bower
@@ -81,8 +89,64 @@ bower@1.4.1 /usr/local/lib/node_modules/bower
 ├── configstore@0.3.2 (object-assign@2.1.1, xdg-basedir@1.0.1, uuid@2.0.1, osenv@0.1.3, js-yaml@3.3.1)
 ├── handlebars@2.0.0 (optimist@0.3.7, uglify-js@2.3.6)
 └── inquirer@0.8.0 (figures@1.3.5, ansi-regex@1.1.1, mute-stream@0.0.4, through@2.3.8, readline2@0.1.1, chalk@0.5.1, lodash@2.4.2, cli-color@0.3.3, rx@2.5.3)
+```
 
+#### Install Bower Components
+```
 $ bower install
+bower cached        git://github.com/angular/bower-material.git#0.9.8
+bower validate      0.9.8 against git://github.com/angular/bower-material.git#~0.9.7
+bower cached        git://github.com/angular/bower-angular-messages.git#1.4.4
+bower validate      1.4.4 against git://github.com/angular/bower-angular-messages.git#~1.4.0
+bower cached        git://github.com/angular/router.git#0.5.3
+bower validate      0.5.3 against git://github.com/angular/router.git#~0.5.3
+bower cached        git://github.com/firebase/geofire-js.git#3.2.2
+bower validate      3.2.2 against git://github.com/firebase/geofire-js.git#~3.2.2
+bower cached        git://github.com/firebase/firebase-bower.git#2.2.9
+bower validate      2.2.9 against git://github.com/firebase/firebase-bower.git#2.2.x
+bower cached        git://github.com/components/rsvp.js.git#3.0.21
+bower validate      3.0.21 against git://github.com/components/rsvp.js.git#3.0.x
+bower cached        git://github.com/angular/bower-angular.git#1.4.4
+bower validate      1.4.4 against git://github.com/angular/bower-angular.git#1.4.4
+bower cached        git://github.com/angular/bower-angular-aria.git#1.4.4
+bower validate      1.4.4 against git://github.com/angular/bower-angular-aria.git#^1.3.15 || >1.4.0-beta.0
+bower cached        git://github.com/angular/bower-angular-animate.git#1.4.4
+bower validate      1.4.4 against git://github.com/angular/bower-angular-animate.git#^1.3.0 || >1.4.0-beta.0
+bower install       geofire#3.2.2
+bower install       angular-new-router#0.5.3
+bower install       angular-messages#1.4.4
+bower install       firebase#2.2.9
+bower install       rsvp#3.0.21
+bower install       angular-material#0.9.8
+bower install       angular-aria#1.4.4
+bower install       angular-animate#1.4.4
+bower install       angular#1.4.4
+
+geofire#3.2.2 bower_components/geofire
+├── firebase#2.2.9
+└── rsvp#3.0.21
+
+angular-new-router#0.5.3 bower_components/angular-new-router
+
+angular-messages#1.4.4 bower_components/angular-messages
+└── angular#1.4.4
+
+firebase#2.2.9 bower_components/firebase
+
+rsvp#3.0.21 bower_components/rsvp
+
+angular-material#0.9.8 bower_components/angular-material
+├── angular#1.4.4
+├── angular-animate#1.4.4
+└── angular-aria#1.4.4
+
+angular-aria#1.4.4 bower_components/angular-aria
+└── angular#1.4.4
+
+angular-animate#1.4.4 bower_components/angular-animate
+└── angular#1.4.4
+
+angular#1.4.4 bower_components/angular
 ```
 
 License
