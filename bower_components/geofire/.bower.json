@@ -47,6 +47,5 @@
   },
   "_source": "git://github.com/firebase/geofire-js.git",
   "_target": "~3.2.2",
-  "_originalSource": "geofire",
-  "_direct": true
+  "_originalSource": "geofire"
 }

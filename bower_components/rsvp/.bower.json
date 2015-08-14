@@ -1,6 +1,6 @@
 {
   "name": "rsvp.js",
-  "version": "3.0.18",
+  "version": "3.0.21",
   "homepage": "https://github.com/tildeio/rsvp.js",
   "authors": [
     "Stefan Penner <stefan.penner@gmail.com>"
@@ -19,11 +19,11 @@
     "vendor",
     "tasks"
   ],
-  "_release": "3.0.18",
+  "_release": "3.0.21",
   "_resolution": {
     "type": "version",
-    "tag": "3.0.18",
-    "commit": "347f289d80e42a3ea97261c10cc1ea8a4070a3c9"
+    "tag": "3.0.21",
+    "commit": "3b4d3885dc96a07e989053b63c197c4633161079"
   },
   "_source": "git://github.com/components/rsvp.js.git",
   "_target": "3.0.x",
