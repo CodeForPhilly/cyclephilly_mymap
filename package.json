@@ -1,0 +1,16 @@
+{
+  "name": "cyclephilly_mymap",
+  "version": "0.1.0",
+  "main": "",
+  "description": "",
+  "keywords": [],
+  "dependencies": {
+    "geofire": "^3.2.2"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://github.com/CfABrigadePhiladelphia/cyclephilly_mymap"
+  },
+  "license": ""
+}
