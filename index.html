@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html class="no-js" lang="en" >
   <head>
     <title>Cycle_ Map</title>
 
@@ -13,6 +13,18 @@
     <!-- <link rel="stylesheet" href="assets/icomoon/style.css"> -->
     <link rel="stylesheet" href="assets/app.css"/>
     <link rel="stylesheet" href="assets/style.css"/>
+		
+    <style type="text/css">
+     /** {outline:1px solid red}*/
+    </style>
+		
+    <script>
+    /* <![CDATA[ *//* Enable Javascript */
+     ;(function(html) {
+      html.className = html.className.replace(/\bno-js\b/, "js")
+     })(document.documentElement);
+    /* ]]> */
+    </script>
   </head>
 
   <body ng-app="starterApp" layout="row" ng-controller="UserController as ul" ng-cloak>
@@ -21,7 +33,7 @@
                 md-component-id="left"
                 md-is-locked-open="$mdMedia('gt-sm')">
     <header class="nav-header md-whiteframe-z2" layout="column" layout-align="center center" layout-padding>
-      <a ng-href="#/" class="docs-logo" href="#/">
+      <a ng-href="/" class="docs-logo" href="/">
         <img src="assets/cycle-logo.png" style="width:50px">
         
       </a>
