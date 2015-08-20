@@ -1,9 +1,12 @@
 @charset 'utf-8';
+@import '//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic';
+@import '//cdnjs.cloudflare.com/ajax/libs/angular-material/0.10.1/angular-material.min.css  ';
 
 * {
   box-sizing:border-box;
   -webkit-box-sizing:border-box;
   -o-box-sizing:border-box;
+  /* outline:1px solid red */
 }
 
 *:before,
@@ -13,7 +16,26 @@
   -o-box-sizing:border-box;
 }
 
-html, body {
+html,
+body {
+  background-image:linear-gradient(
+    rgba(255,255,255,.15),
+    rgba(255,255,255,.15) 25%,
+    rgba(255,255,255,.15),
+    rgba(255,255,255,.15) 25%
+  );
+  background-image:-webkit-linear-gradient(
+    rgba(255,255,255,.15),
+    rgba(255,255,255,.15) 25%,
+    rgba(255,255,255,.15),
+    rgba(255,255,255,.15) 25%
+  );
+  background-image:-o-linear-gradient(
+    rgba(255,255,255,.15),
+    rgba(255,255,255,.15) 25%,
+    rgba(255,255,255,.15),
+    rgba(255,255,255,.15) 25%
+  );
   font-family:'Roboto', sans-serif;
   font-size:14px;
   height:100%;
