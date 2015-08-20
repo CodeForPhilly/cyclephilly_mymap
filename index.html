@@ -38,16 +38,6 @@
       layout-padding>
 
       <div class="logo-container"><figure class="logo" id="logo"></figure></div>
-      <script>/* <![CDATA[ *//* Event Listener Reload Window */
-        ;(function(window, document) {
-          'use strict';
-          var document = window.document;
-          document.getElementById('logo')
-            .addEventListener('click', function(event) {
-              window.location.href = '/';
-            });
-        })(this, document, 0);
-      /* ]]> */</script>
       <h2 class="logo-h2 md-heading">CyclePhilly</h2>
       <div layout="row">
         <md-icon md-font-icon="{{ul.weather.icon.name}}"
@@ -63,6 +53,7 @@
       </div>
     </header>
     <md-divider><!-- decorative marker --></md-divider>
+
 
   <md-subheader class="md-no-sticky">Bike Layers</md-subheader>
 
@@ -126,9 +117,9 @@
 
   <div flex layout="column" tabIndex="-1" role="main" class="md-whiteframe-z2">
 
-    <md-toolbar style="min-height: 50px;" layout="row" class="md-whiteframe-z1" layout-align="center center">
+    <md-toolbar style="min-height:50px;" layout="row" class="md-whiteframe-z1" layout-align="center center">
       <md-button class="md-icon-button menu" hide-gt-sm ng-click="ul.toggleList()" aria-label="Show User List">
-        <md-icon md-svg-icon="menu" ></md-icon>
+        <md-icon md-svg-icon="menu"></md-icon>
       </md-button>
       <md-button ng-click="ul.toggleMode('bike')"
                  title="Toggle bikes"
@@ -153,11 +144,21 @@
       </md-icon>
       <span flex="5"></span>
     </md-toolbar>
-    <div layout="row" style="min-height:45px">
-    <h3 layout-margin>Ride Indego - Nearby Stations</h3>
-  </div>
+    
+    
+    <!-- Docking Stations Header
+    ============================================== -->
+    <div layout="row" class="indego-statis-header">
+      <header><h3>Ride Indego - Nearby Stations</h3></header>
+    </div>
+
+
+
     <md-content layout="row" layout-align="start start" layout-margin class="md-whiteframe-z3" style="padding-bottom:10px;margin-bottom:5px;height:280px;background-color: #EFEFEF;" layout-fill>
-<md-list style="min-width:320px;max-width: 400px;" layout-fill >
+    
+    
+
+<md-list style="min-width:320px;max-width:400px;" layout-fill >
   
   <md-list-item class="md-2-line md-no-sticky" ng-repeat="station in selectedItems" layout-fill>
     <!-- <img alt="{{ station.name }}" ng-src="assets/indego-light.png" class="md-avatar avatar" /> -->
@@ -202,12 +203,9 @@
 
   <!-- Docking Stations near you container
   ============================================== -->
-  <md-list-item layout-fill
-    style="background-color:#FFF;margin: 8px 8px;"
-    class="md-2-line md-no-sticky md-whiteframe-z1"
-    data-ng-repeat="station in sortedIndego">
+  <md-list-item layout-fill class="md-3-line md-no-sticky md-whiteframe-z1 indego-status-container" data-ng-repeat="station in sortedIndego">
     
-     <div layout-padding style="min-width:150px;max-width:160px">
+     <div layout-padding class="indego-status-info">
        <br>{{station.properties.name}}<br>
        <small><strong>Station ID:</strong> {{station.properties.kioskId}}</small><br>
        <small>{{station.distance}}m away</small><br>
@@ -216,64 +214,31 @@
      <div class="md-list-item-text">
 
        <div layout="row" layout-fill>
-         <span flex="5"></span>
-         <p style="font-size:1.1em;text-align:center">Bikes</p>
-         <span flex="15"></span>
-         <p style="font-size:1.1em">Docks</p>
+         <p class="indego-status-title-bikes">Bikes</p>
+         <p class="indego-status-title-docks">Docks</p>
        </div>
     
      <div layout="row" layout-fill>
-       <md-button
-         class="md-fab md-mini md-primary"
-         aria-label="Eat cake"
-         data-station-popup="bikes">
-        
-         <span style="padding-left:5px"> {{station.properties.bikesAvailable}}</span>
+       <md-button class="md-fab md-mini md-primary bikes-circle-btn" aria-label="Eat cake" data-station-popup="bikes">
+         {{station.properties.bikesAvailable}}
        </md-button><!-- total-number-of-bikes-btn -->
-       <span flex="10"><!--
-         This is a span, remove soon ...
-       --></span>
-       <md-button
-         class="md-fab md-mini md-accent md-hue-2"
-         aria-label="Eat cake"
-         data-station-popup="docks">
-
-         <span style="padding-left:5px">{{station.properties.docksAvailable}}</span>
+       <md-button class="md-fab md-mini md-accent md-hue-2 docks-circle-btn" aria-label="Eat cake" data-station-popup="docks">
+         {{station.properties.docksAvailable}}
        </md-button><!-- total-number-of-docks-btn -->
-       <script>
-         /* <![CDATA[ *//* Station PopUp Script */
-           ;(function(window, document) {
-             "use strict";
-            
-             var document = window.document;
-
-             function loadContent(event) {
-              
-               // Initialize the popup click event
-               $("[data-station-popup='bikes']").on("click", function(event) {
-                
-               });
-              
-              
-               //$("[data-station-popup='docks']").hide();
-             }
-            
-             if (document.readyState == "complete" || document.readyState == "loaded")
-               window.addEventListener("load", loadContent)
-             else
-               window.addEventListener("DOMContentLoaded", loadContent)
-           })(this, document, 0);
-         /* ]]> */
-       </script>
      </div>
+
     </div>
+
   </md-list-item>
  </md-list>
 
 
-
-
-<span flex></span>
+ <div flex class="md-3-line md-whiteframe-z1 indego-status-popup-container">
+   <header><h3>{{station.properties.name}}</h3></header>
+   <article role="article"><section>
+     <p class="indego-station-details">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed elementum magna nec dolor elementum, in posuere risus ultrices. Duis id tellus ac lectus malesuada suscipit quis non massa. Donec eleifend rutrum dolor sed dictum. Vestibulum eget nibh sollicitudin, maximus diam id, aliquet mi. Nullam ornare purus at sapien finibus ullamcorper ut in mi. Sed eu eleifend diam, id tempus nisi. Praesent rutrum magna eget hendrerit varius. Curabitur id tincidunt enim. Nunc eu est rhoncus, ullamcorper nisi quis, consequat augue. Cras vitae libero id diam tempor convallis.</p>
+   </section></article>
+ </div>
 
 
 </md-content>
@@ -301,7 +266,7 @@
       </md-fab-speed-dial>
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBfdI61qNxrgQ2qqXXyIKjMbRdi19HkjtY&libraries=places"></script>
 
@@ -317,7 +282,7 @@
     <script src="//cdn.firebase.com/libs/geofire/3.2.2/geofire.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.4/angular-messages.js"></script>
     
-    <script src="./src/lodash.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.0/lodash.min.js"></script>
     <script src="./src/geolocationmarker-compiled.js"></script>
 
     <script src="./src/users/Users.js"></script>
@@ -389,6 +354,8 @@
               });
 
     </script>
-
+              
+    <script src="./assets/js/refresh.js" defer></script>
+    <script src="./assets/js/indego-status-btn.js" defer></script>
   </body>
 </html>

@@ -1,12 +1,11 @@
 @charset 'utf-8';
 @import '//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic';
-@import '//cdnjs.cloudflare.com/ajax/libs/angular-material/0.10.1/angular-material.min.css  ';
+@import '//cdnjs.cloudflare.com/ajax/libs/angular-material/0.10.1/angular-material.min.css';
 
 * {
   box-sizing:border-box;
   -webkit-box-sizing:border-box;
   -o-box-sizing:border-box;
-  /* outline:1px solid red */
 }
 
 *:before,
@@ -76,7 +75,7 @@ body {
 }
 
 .logo-h2 {
-  cursor:default !important;
+  cursor:default !important
 }
 
 .logo-temp-wrapper,
@@ -84,8 +83,89 @@ body {
 .logo-temp-wrapper > p > span {
   cursor:default !important;
   margin:0;
-  padding:0;
+  padding:0
 }
+
+/* Indego Status Header content block (line 151) */
+.indego-statis-header {
+  height:45px;
+  min-height:45px
+}
+
+.indego-statis-header header {
+  clear:both;
+  display:table;
+  height:100%;
+  padding:0 1.4em 0 1.4em;
+  width:100%
+}
+
+.indego-statis-header header h3 {
+  cursor:default;
+  display:table;
+  vertical-align:center
+}
+
+/* Indego Status content block (line 196) */
+.indego-status-container {
+  background-color:rgb(255,255,255);
+  border-radius:5px;
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+  margin:8px 8px;
+  width:96%
+}
+
+.indego-status-info {
+  min-width:150px;
+  max-width:160px
+}
+
+.indego-status-title-bikes {
+  font-size:1.1em;
+  height:auto;
+  padding-left:10px;
+  text-align:center;
+  width:auto
+}
+
+.indego-status-title-docks {
+  font-size:1.1em;
+  height:auto;
+  padding-left:30px;
+  width:auto
+}
+
+.bikes-circle-btn {
+  left:1px;
+  padding-left:8px;
+  position:relative;
+}
+
+.docks-circle-btn {
+  left:11.5px;
+  padding-left:8px;
+  position:relative;
+}
+
+/* Indego Status popup content block (line 226) */
+.indego-status-popup-container {
+  background-color:rgb(255,255,255);
+  border-radius:5px;
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+  height:250px;
+  padding:1em 2em 1em 2em;
+  width:100%
+}
+
+.indego-station-details {
+  font-size:12px;
+  line-height:1.2em;
+  margin-top:2em;
+  text-align:left;
+}
+
 
 
 
