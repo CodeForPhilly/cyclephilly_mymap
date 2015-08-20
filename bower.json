@@ -1,0 +1,21 @@
+{
+  "name": "cyclephilly_mymap",
+  "version": "0.1.0",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "license": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "angular-material": "~0.9.7",
+    "angular-messages": "~1.4.0",
+    "angular-new-router": "~0.5.3",
+    "geofire": "~3.2.2"
+  }
+}
