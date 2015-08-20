@@ -19,100 +19,76 @@
     /* ]]> */
     </script>
   </head>
-  <body ng-app="starterApp"
-    layout="row"
-    data-ng-controller="UserController as ul"
-    data-ng-cloak>
+  <body data-ng-app="starterApp" layout="row" data-ng-controller="UserController as ul" data-ng-cloak>
 
 
-  <!-- Application sidebar content
-  ============================================== -->
-  <md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2"
-    md-component-id="left"
-    md-is-locked-open="$mdMedia('gt-sm')">
+    <!-- Application sidebar content
+    ============================================== -->
+    <md-sidenav class="site-sidenav md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
 
-    <header role="banner"
-      class="nav-header md-whiteframe-z2"
-      layout="column"
-      layout-align="center center"
-      layout-padding>
-
-      <div class="logo-container"><figure class="logo" id="logo"></figure></div>
-      <h2 class="logo-h2 md-heading">CyclePhilly</h2>
-      <div layout="row">
-        <md-icon md-font-icon="{{ul.weather.icon.name}}"
-           ng-style="{color: ul.weather.icon.color}"
-           ng-class="md-warn"
-           alt="weather Icon"
-           class="step">
-        </md-icon>
-        <section class="logo-temp-wrapper"><p>
+      <header role="banner" class="nav-header md-whiteframe-z2" layout="column" layout-align="center center" layout-padding>
+        <div class="logo-container"><figure class="logo" id="logo"></figure></div>
+        <h2 class="logo-h2 md-heading">CyclePhilly</h2>
+        <div layout="row">
+          <md-icon md-font-icon="{{ul.weather.icon.name}}" data-ng-style="{color: ul.weather.icon.color}" data-ng-class="md-warn" alt="weather Icon" class="step"></md-icon>
+          <section class="logo-temp-wrapper"><p>
             <span>{{ul.weather.temperature}}</span>
             <span>&deg;</span>
-        </p></section>
+          </p></section>
+        </div>
+      </header>
+
+
+      <!-- Application Sidebar Map Controllers
+      ============================================== -->
+      <div class="md-whiteframe-z2 map-controller-container" layout="column">
+        <md-subheader class="md-no-sticky">Bike Layers</md-subheader>
+
+        <md-list-item data-ng-click="navigateTo(setting.extraScreen, $event)">
+          <md-switch data-ng-model="ul.layers.indego.enabled" class="md-primary"></md-switch>
+          <md-icon class="map-controller-icon" md-svg-icon="{{ul.layers.indego.icon}}"></md-icon>
+          <p class="map-controller-title">{{ul.layers.indego.name}}</p>
+        </md-list-item>
+
+        <md-list-item>
+          <md-switch data-ng-change="ul.toggleRoutes(ul.layers.routes.enabled)" data-ng-model="ul.layers.routes.enabled" class="md-primary md-hue-2"></md-switch>
+          <md-icon class="map-controller-icon" md-svg-icon="{{ul.layers.routes.icon}}"></md-icon>
+          <p class="map-controller-title">{{ul.layers.routes.name}}</p>
+        </md-list-item>
+
+        <md-list-item data-ng-click="navigateTo(setting.extraScreen, $event)">
+          <md-switch data-ng-model="ul.layers.racks.enabled" data-ng-change="ul.onRackSwitch(ul.layers.racks.enabled)" class="md-accent"></md-switch>
+          <md-icon class="map-controller-icon" md-svg-icon="{{ul.layers.racks.icon}}"></md-icon>
+          <p class="map-controller-title">{{ul.layers.racks.name}}</p>
+        </md-list-item>
+      
+        <md-divider></md-divider>
       </div>
-    </header>
-    <md-divider><!-- decorative marker --></md-divider>
-
-
-  <md-subheader class="md-no-sticky">Bike Layers</md-subheader>
-
-  <md-list-item  ng-click="navigateTo(setting.extraScreen, $event)">
-  <md-switch  ng-model="ul.layers.indego.enabled" class="md-primary"></md-switch>
-    <md-icon md-svg-icon="{{ul.layers.indego.icon}}"></md-icon>
-    <p> {{ ul.layers.indego.name }} </p>
     
-  </md-list-item>
 
-  <md-list-item >
-  <md-switch ng-change="ul.toggleRoutes(ul.layers.routes.enabled)"  ng-model="ul.layers.routes.enabled" class="md-primary md-hue-2"></md-switch>
-    <md-icon md-svg-icon="{{ul.layers.routes.icon}}"></md-icon>
-    <p> {{ ul.layers.routes.name }} </p>
-    
-  </md-list-item>
+      <!-- Application Sidebar Trip Controllers
+      ============================================== -->
+      <div class="md-whiteframe-z2 trip-controller-container" layout="column">
+        <md-subheader class="md-no-sticky">My Trips</md-subheader>
+        <md-list>
 
-  <md-list-item  ng-click="navigateTo(setting.extraScreen, $event)">
-  <md-switch  ng-model="ul.layers.racks.enabled" ng-change="ul.onRackSwitch(ul.layers.racks.enabled)"  class="md-accent"></md-switch>
-    <md-icon md-svg-icon="{{ul.layers.racks.icon}}"></md-icon>
-    <p> {{ ul.layers.racks.name }} </p>
-    
-  </md-list-item>
+          <md-list-item data-ng-repeat="set in ul.user.favorites | limitTo:3" data-ng-click="goToDatSet(set.name, $event)">
+            <img alt="{{set.name}}" ng-src="{{set.img}}" class="md-avatar" />
+            <p>{{set.name}}</p>
+            <md-icon md-svg-icon="communication:messenger" data-ng-click="doSecondaryAction($event)" aria-label="Open Chat" class="md-secondary md-hue-3" data-ng-class="{'md-primary': set.newMessage}"></md-icon>
+          </md-list-item>
 
-  
-  
-  <md-divider></md-divider>
-  <md-subheader class="md-no-sticky">My Trips</md-subheader>
+          <md-list-item data-ng-click="ul.githubLogin()" data-ng-show="ul.loggedOut">
+            <md-icon md-font-icon="icon-github" data-ng-style="{'font-size': '24px', height: '24px'}" data-ng-class="md-accent" alt="print"></md-icon>
+            <p>Log In</p>
+          </md-list-item>
 
-  <md-list>
-    <!-- <md-list-item ng-click="ul.logOut()" ng-hide="ul.loggedOut">
+        </md-list>
+      </div>
 
-    <md-icon md-font-icon="icon-exit"
-                   ng-style="{'font-size': '24px', height: '24px'}"
-                   ng-class="md-accent"
-                   alt="print">
-          </md-icon>
-    <p>Logout</p>
-    <img ng-src="{{ul.user.image}}" ng-style="{height: '24px'}" />
-<md-divider></md-divider>
-    
-  </md-list-item> -->
-  
-  <md-list-item ng-repeat="set in ul.user.favorites | limitTo:3" ng-click="goToDatSet(set.name, $event)">
-    <img alt="{{ set.name }}" ng-src="{{ set.img }}" class="md-avatar" />
-    <p>{{ set.name }}</p>
-    <md-icon md-svg-icon="communication:messenger" ng-click="doSecondaryAction($event)" aria-label="Open Chat" class="md-secondary md-hue-3" ng-class="{'md-primary': set.newMessage}"></md-icon>
-  </md-list-item>
-  <md-list-item ng-click="ul.githubLogin()" ng-show="ul.loggedOut">
-    <md-icon md-font-icon="icon-github"
-                   ng-style="{'font-size': '24px', height: '24px'}"
-                   ng-class="md-accent"
-                   alt="print">
-          </md-icon>
-    <p>Log In</p>
-    
-  </md-list-item>
-    </md-list>
-  </md-sidenav>
+    </md-sidenav>
+
+
 
 
   <div flex layout="column" tabIndex="-1" role="main" class="md-whiteframe-z2">

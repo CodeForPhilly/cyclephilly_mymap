@@ -6,6 +6,7 @@
   box-sizing:border-box;
   -webkit-box-sizing:border-box;
   -o-box-sizing:border-box;
+  /*outline:1px solid red*/
 }
 
 *:before,
@@ -43,9 +44,18 @@ body {
 }
 
 /* Toolbar area */
+.site-sidenav {
+  background-color:#EFEFEF;
+}
+
 .nav-header {
+  background-color:rgb(255,255,255);
   border-bottom:1px solid #267ED5;
+  border-radius:5px;
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
   flex-shrink:0;
+  margin:.5em;
   z-index:2;
 }
 
@@ -84,6 +94,27 @@ body {
   cursor:default !important;
   margin:0;
   padding:0
+}
+
+/* Application Sidebar Map Controllers Content Block (line 45 & line 69) */
+.map-controller-container,
+.trip-controller-container {
+  background-color:rgb(255,255,255);
+  border-radius:5px;
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+  margin:.5em;
+}
+
+.map-controller-icon {
+  float:left;
+  position:realtive;
+}
+
+.map-controller-title {
+  float:left;
+  left:5px;
+  position:relative
 }
 
 /* Indego Status Header content block (line 151) */
