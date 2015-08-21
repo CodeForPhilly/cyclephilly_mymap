@@ -117,6 +117,32 @@ body {
   position:relative
 }
 
+.trip-controller-clock-container {
+  float:left;
+  height:auto;
+  margin:0 auto .4em auto;
+  padding:0;
+  position:relative;
+  width:90%
+}
+
+.trip-controller-clock-container li {
+  float:left;
+  height:auto;
+  position:relative;
+  width:25%
+}
+
+.trip-controller-clock-container li span {
+  cursor:default;
+  display:block;
+  font-size:14px;
+  font-weight:400;
+  height:100%;
+  text-align:center;
+  width:100%
+}
+
 /* Indego Status Header content block (line 151) */
 .indego-statis-header {
   height:45px;

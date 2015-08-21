@@ -26,7 +26,7 @@
     ============================================== -->
     <md-sidenav class="site-sidenav md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
 
-      <header role="banner" class="nav-header md-whiteframe-z2" layout="column" layout-align="center center" layout-padding>
+      <header role="banner" class="nav-header md-whiteframe-z1" layout="column" layout-align="center center" layout-padding>
         <div class="logo-container"><figure class="logo" id="logo"></figure></div>
         <h2 class="logo-h2 md-heading">CyclePhilly</h2>
         <div layout="row">
@@ -41,11 +41,11 @@
 
       <!-- Application Sidebar Map Controllers
       ============================================== -->
-      <div class="md-whiteframe-z2 map-controller-container" layout="column">
+      <div class="md-whiteframe-z1 map-controller-container" layout="column">
         <md-subheader class="md-no-sticky">Bike Layers</md-subheader>
 
-        <md-list-item data-ng-click="navigateTo(setting.extraScreen, $event)">
-          <md-switch data-ng-model="ul.layers.indego.enabled" class="md-primary"></md-switch>
+        <md-list-item>
+          <md-switch data-ng-change="ul.toggleRoutes(ul.layers.routes.enabled)" data-ng-model="ul.layers.indego.enabled" class="md-primary"></md-switch>
           <md-icon class="map-controller-icon" md-svg-icon="{{ul.layers.indego.icon}}"></md-icon>
           <p class="map-controller-title">{{ul.layers.indego.name}}</p>
         </md-list-item>
@@ -56,8 +56,8 @@
           <p class="map-controller-title">{{ul.layers.routes.name}}</p>
         </md-list-item>
 
-        <md-list-item data-ng-click="navigateTo(setting.extraScreen, $event)">
-          <md-switch data-ng-model="ul.layers.racks.enabled" data-ng-change="ul.onRackSwitch(ul.layers.racks.enabled)" class="md-accent"></md-switch>
+        <md-list-item>
+          <md-switch data-ng-change="ul.onRackSwitch(ul.layers.racks.enabled)" data-ng-model="ul.layers.racks.enabled" class="md-accent"></md-switch>
           <md-icon class="map-controller-icon" md-svg-icon="{{ul.layers.racks.icon}}"></md-icon>
           <p class="map-controller-title">{{ul.layers.racks.name}}</p>
         </md-list-item>
@@ -68,8 +68,23 @@
 
       <!-- Application Sidebar Trip Controllers
       ============================================== -->
-      <div class="md-whiteframe-z2 trip-controller-container" layout="column">
+      <div class="md-whiteframe-z1 trip-controller-container" layout="column">
         <md-subheader class="md-no-sticky">My Trips</md-subheader>
+
+        <ul class="trip-controller-clock-container">
+          <li><span><strong>Duration:</strong></span></li>
+          <li><span data-record-time="hours">0hr</span></li>
+          <li><span data-record-time="minutes">0min</span></li>
+          <li><span data-record-time="seconds">0sec</span></li>
+        </ul>
+
+        <ul class="trip-controller-clock-container">
+          <li><span><strong>Distance:</strong></span></li>
+          <li><span data-record-location>0m</span></li>
+          <li><span></span></li>
+          <li><span></span></li>
+        </ul>
+
         <md-list>
 
           <md-list-item data-ng-repeat="set in ul.user.favorites | limitTo:3" data-ng-click="goToDatSet(set.name, $event)">
@@ -209,38 +224,32 @@
  </md-list>
 
 
- <div flex class="md-3-line md-whiteframe-z1 indego-status-popup-container">
-   <header><h3>{{station.properties.name}}</h3></header>
-   <article role="article"><section>
-     <p class="indego-station-details">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed elementum magna nec dolor elementum, in posuere risus ultrices. Duis id tellus ac lectus malesuada suscipit quis non massa. Donec eleifend rutrum dolor sed dictum. Vestibulum eget nibh sollicitudin, maximus diam id, aliquet mi. Nullam ornare purus at sapien finibus ullamcorper ut in mi. Sed eu eleifend diam, id tempus nisi. Praesent rutrum magna eget hendrerit varius. Curabitur id tincidunt enim. Nunc eu est rhoncus, ullamcorper nisi quis, consequat augue. Cras vitae libero id diam tempor convallis.</p>
-   </section></article>
- </div>
+  <div flex class="md-3-line md-whiteframe-z1 indego-status-popup-container">
+    <header><h3>{{station.properties.name}}</h3></header>
+    <article role="article"><section>
+      <p class="indego-station-details">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed elementum magna nec dolor elementum, in posuere risus ultrices. Duis id tellus ac lectus malesuada suscipit quis non massa. Donec eleifend rutrum dolor sed dictum. Vestibulum eget nibh sollicitudin, maximus diam id, aliquet mi. Nullam ornare purus at sapien finibus ullamcorper ut in mi. Sed eu eleifend diam, id tempus nisi. Praesent rutrum magna eget hendrerit varius. Curabitur id tincidunt enim. Nunc eu est rhoncus, ullamcorper nisi quis, consequat augue. Cras vitae libero id diam tempor convallis.</p>
+    </section></article>
+  </div>
 
-
-</md-content>
-
-  <div id="map-canvas">
-</div>
+  </md-content>
 
 
 
+  <div id="map-canvas"></div>
 
   </div>
   
   <div class="lock-size" layout="row" layout-align="center center">
-      <md-fab-speed-dial md-open="false" md-direction="up"
-                         ng-class="md-fling">
-          <md-button aria-label="menu" class="md-fab md-warn">
-            <md-icon md-font-icon="icon-timer"
-           ng-style="{color: ul.weather.icon.color,height:'30px','font-size':'30px' }"
-           ng-class="md-warn"
-           alt="weather Icon"
-           class="step ">
-         </md-icon>
-          </md-button>
-        
-      </md-fab-speed-dial>
-    </div>
+    <md-fab-speed-dial md-open="false" md-direction="up" data-ng-class="md-fling">
+      <md-button aria-label="menu" class="md-fab md-warn" data-record-mytrip>
+        <md-icon md-font-icon="icon-timer" data-ng-style="{color: ul.weather.icon.color,height:'30px','font-size':'30px' }" data-ng-class="md-warn" alt="weather Icon" class="step"></md-icon>
+      </md-button>  
+    </md-fab-speed-dial>
+  </div>
+
+
+
+
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
@@ -333,5 +342,6 @@
               
     <script src="./assets/js/refresh.js" defer></script>
     <script src="./assets/js/indego-status-btn.js" defer></script>
+    <script src="./assets/js/mytrip.js" defer></script>
   </body>
 </html>
