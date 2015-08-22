@@ -2,14 +2,13 @@
 <html class="no-js" lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     
     <title>Cycle_ Map</title>
 
-    <link rel="stylesheet" href="assets/css/app.css" media="all">
-    <link rel="stylesheet" href="assets/css/style.css" media="all">
+    <link rel="stylesheet" href="./assets/css/app.css" media="all">
 		
     <script>
     /* <![CDATA[ *//* Enable Javascript */
@@ -19,241 +18,190 @@
     /* ]]> */
     </script>
   </head>
-  <body data-ng-app="starterApp" layout="row" data-ng-controller="UserController as ul" data-ng-cloak>
-
-
-    <!-- Application sidebar content
+  <body data-ng-app="starterApp" data-ng-controller="UserController as ul" data-ng-cloak>
+    
+    
+    <!-- Application Global Navigation
     ============================================== -->
-    <md-sidenav class="site-sidenav md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
-
-      <header role="banner" class="nav-header md-whiteframe-z1" layout="column" layout-align="center center" layout-padding>
-        <div class="logo-container"><figure class="logo" id="logo"></figure></div>
-        <h2 class="logo-h2 md-heading">CyclePhilly</h2>
-        <div layout="row">
-          <md-icon md-font-icon="{{ul.weather.icon.name}}" data-ng-style="{color: ul.weather.icon.color}" data-ng-class="md-warn" alt="weather Icon" class="step"></md-icon>
-          <section class="logo-temp-wrapper"><p>
-            <span>{{ul.weather.temperature}}</span>
-            <span>&deg;</span>
-          </p></section>
+    <nav role="navigation" aria-label="Global Navigation" class="md-whiteframe-z1 navigation">
+      <md-toolbar class="navigation-toolbar" layout="row" layout-align="center center">
+        <md-button class="md-icon-button menu" hide-gt-sm ng-click="ul.toggleList()" aria-label="Show User List">
+          <md-icon md-svg-icon="menu"></md-icon>
+        </md-button>
+        <md-button ng-click="ul.toggleMode('bike')" title="Toggle bikes" ng-disabled="false" aria-label="Bikes" class="md-icon-button launch">
+          <md-icon md-font-icon="{{ul.weather.icon}}" ng-style="{'font-size': '24px', height: '24px',color: 'ul.bikeColor'}" ng-class="md-accent" alt="print"></md-icon>
+        </md-button>
+        <div flex="55" class="weather-text">
+          <span style="font-size:13px">{{ul.weather.summary}}</span>
         </div>
-      </header>
-
-
-      <!-- Application Sidebar Map Controllers
-      ============================================== -->
-      <div class="md-whiteframe-z1 map-controller-container" layout="column">
-        <md-subheader class="md-no-sticky">Bike Layers</md-subheader>
-
-        <md-list-item>
-          <md-switch data-ng-change="ul.toggleRoutes(ul.layers.routes.enabled)" data-ng-model="ul.layers.indego.enabled" class="md-primary"></md-switch>
-          <md-icon class="map-controller-icon" md-svg-icon="{{ul.layers.indego.icon}}"></md-icon>
-          <p class="map-controller-title">{{ul.layers.indego.name}}</p>
-        </md-list-item>
-
-        <md-list-item>
-          <md-switch data-ng-change="ul.toggleRoutes(ul.layers.routes.enabled)" data-ng-model="ul.layers.routes.enabled" class="md-primary md-hue-2"></md-switch>
-          <md-icon class="map-controller-icon" md-svg-icon="{{ul.layers.routes.icon}}"></md-icon>
-          <p class="map-controller-title">{{ul.layers.routes.name}}</p>
-        </md-list-item>
-
-        <md-list-item>
-          <md-switch data-ng-change="ul.onRackSwitch(ul.layers.racks.enabled)" data-ng-model="ul.layers.racks.enabled" class="md-accent"></md-switch>
-          <md-icon class="map-controller-icon" md-svg-icon="{{ul.layers.racks.icon}}"></md-icon>
-          <p class="map-controller-title">{{ul.layers.racks.name}}</p>
-        </md-list-item>
-      
-        <md-divider></md-divider>
-      </div>
+        <span flex></span>
+        <md-icon md-font-icon="icon-more_vert" ng-style="{'font-size': '24px', height: '24px'}" ng-class="md-accent" ng-click="ul.test($event)" alt="print"></md-icon>
+        <span flex="5"></span>
+      </md-toolbar>
+    </nav>
+    
     
 
-      <!-- Application Sidebar Trip Controllers
+    <div layout="row" class="layout">
+
+
+      <!-- Application sidebar content
       ============================================== -->
-      <div class="md-whiteframe-z1 trip-controller-container" layout="column">
-        <md-subheader class="md-no-sticky">My Trips</md-subheader>
+      <aside layout="column" class="layout-columns" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
 
-        <ul class="trip-controller-clock-container">
-          <li><span><strong>Duration:</strong></span></li>
-          <li><span data-record-time="hours">0hr</span></li>
-          <li><span data-record-time="minutes">0min</span></li>
-          <li><span data-record-time="seconds">0sec</span></li>
-        </ul>
+        <header role="banner" class="nav-header md-whiteframe-z1" layout="column" layout-align="center center" layout-padding><div class="logo-container"><figure class="logo" id="logo"></figure></div><h1 class="logo-h1 md-heading">CyclePhilly</h1><div layout="row"><md-icon md-font-icon="{{ul.weather.icon.name}}" data-ng-style="{color: ul.weather.icon.color}" data-ng-class="md-warn" alt="weather Icon" class="step"></md-icon><section class="logo-temp-wrapper"><p><span>{{ul.weather.temperature}}</span><span>&deg;</span></p></section></div></header>
+        
+        <md-subheader class="md-no-sticky md-whiteframe-z1 controller-container-header">Bike Layers<span> | </span><em>Turn layers on and off</em></md-subheader>
+        
+        <div class="md-whiteframe-z1 map-controller-container" layout="column">
 
-        <ul class="trip-controller-clock-container">
-          <li><span><strong>Distance:</strong></span></li>
-          <li><span data-record-location>0m</span></li>
-          <li><span></span></li>
-          <li><span></span></li>
-        </ul>
+          <md-list-item style="border-bottom:1px dotted rgba(165,165,165,.45);width:100%">
+            <md-switch data-ng-change="ul.toggleRoutes(ul.layers.routes.enabled)" data-ng-model="ul.layers.indego.enabled" class="md-primary"></md-switch>
+            <md-icon class="map-controller-icon" md-svg-icon="{{ul.layers.indego.icon}}"></md-icon>
+            <p class="map-controller-title">{{ul.layers.indego.name}}</p>
+          </md-list-item>
+          
+          <md-list-item style="border-bottom:1px dotted rgba(165,165,165,.45);width:100%">
+            <md-switch data-ng-change="ul.toggleRoutes(ul.layers.routes.enabled)" data-ng-model="ul.layers.routes.enabled" class="md-primary md-hue-2"></md-switch>
+            <md-icon class="map-controller-icon" md-svg-icon="{{ul.layers.routes.icon}}"></md-icon>
+            <p class="map-controller-title">{{ul.layers.routes.name}}</p>
+          </md-list-item>
 
-        <md-list>
+          <md-list-item style="width:100%">
+            <md-switch data-ng-change="ul.onRackSwitch(ul.layers.racks.enabled)" data-ng-model="ul.layers.racks.enabled" class="md-accent"></md-switch>
+            <md-icon class="map-controller-icon" md-svg-icon="{{ul.layers.racks.icon}}"></md-icon>
+            <p class="map-controller-title">{{ul.layers.racks.name}}</p>
+          </md-list-item>
+        </div>
+        
+        <md-subheader class="md-no-sticky md-whiteframe-z1 controller-container-header">My Trips<span> | </span><em>Record and share trips</em></md-subheader>
+        
+        <div class="md-whiteframe-z1 trip-controller-container" layout="column">
+          
+          <ul class="trip-controller-clock-container">
+            <li><span><strong>Duration:</strong></span></li>
+            <li><span data-record-time="hours">0hr</span></li>
+            <li><span data-record-time="minutes">0min</span></li>
+            <li><span data-record-time="seconds">0sec</span></li>
+          </ul>
 
+          <ul class="trip-controller-clock-container">
+            <li><span><strong>Distance:</strong></span></li>
+            <li><span data-record-location>0m</span></li>
+            <li><span></span></li>
+            <li><span></span></li>
+          </ul>
+        </div>
+        
+        <!--<md-list>
           <md-list-item data-ng-repeat="set in ul.user.favorites | limitTo:3" data-ng-click="goToDatSet(set.name, $event)">
             <img alt="{{set.name}}" ng-src="{{set.img}}" class="md-avatar" />
             <p>{{set.name}}</p>
             <md-icon md-svg-icon="communication:messenger" data-ng-click="doSecondaryAction($event)" aria-label="Open Chat" class="md-secondary md-hue-3" data-ng-class="{'md-primary': set.newMessage}"></md-icon>
           </md-list-item>
-
+          
           <md-list-item data-ng-click="ul.githubLogin()" data-ng-show="ul.loggedOut">
             <md-icon md-font-icon="icon-github" data-ng-style="{'font-size': '24px', height: '24px'}" data-ng-class="md-accent" alt="print"></md-icon>
             <p>Log In</p>
           </md-list-item>
+        </md-list>-->
 
-        </md-list>
-      </div>
-
-    </md-sidenav>
-
-
-
-
-  <div flex layout="column" tabIndex="-1" role="main" class="md-whiteframe-z2">
-
-    <md-toolbar style="min-height:50px;" layout="row" class="md-whiteframe-z1" layout-align="center center">
-      <md-button class="md-icon-button menu" hide-gt-sm ng-click="ul.toggleList()" aria-label="Show User List">
-        <md-icon md-svg-icon="menu"></md-icon>
-      </md-button>
-      <md-button ng-click="ul.toggleMode('bike')"
-                 title="Toggle bikes"
-                 ng-disabled="false"
-                 aria-label="Bikes"
-                 class="md-icon-button launch" >
-          <md-icon md-font-icon="{{ul.weather.icon}}"
-                   ng-style="{'font-size': '24px', height: '24px',color: 'ul.bikeColor'}"
-                   ng-class="md-accent"
-                   alt="print">
-          </md-icon>
-      </md-button>
-      <div flex="55" class="weather-text">
-        <span style="font-size:13px">{{ul.weather.summary}}</span>
-      </div>
-      <span flex></span>
-      <md-icon md-font-icon="icon-more_vert"
-               ng-style="{'font-size': '24px', height: '24px'}"
-               ng-class="md-accent"
-               ng-click="ul.test($event)"
-               alt="print">
-      </md-icon>
-      <span flex="5"></span>
-    </md-toolbar>
-    
-    
-    <!-- Docking Stations Header
-    ============================================== -->
-    <div layout="row" class="indego-statis-header">
-      <header><h3>Ride Indego - Nearby Stations</h3></header>
-    </div>
-
-
-
-    <md-content layout="row" layout-align="start start" layout-margin class="md-whiteframe-z3" style="padding-bottom:10px;margin-bottom:5px;height:280px;background-color: #EFEFEF;" layout-fill>
-    
-    
-
-<md-list style="min-width:320px;max-width:400px;" layout-fill >
-  
-  <md-list-item class="md-2-line md-no-sticky" ng-repeat="station in selectedItems" layout-fill>
-    <!-- <img alt="{{ station.name }}" ng-src="assets/indego-light.png" class="md-avatar avatar" /> -->
-    <div layout-padding style="min-width:150px">
-      <br>
-      {{station.properties.name}}<br>
-      <small><strong>Station ID:</strong> {{station.properties.kioskId}}</small><br>
+      </aside>
       
-    </div>
-        <div class="md-list-item-text">
-          <div layout="row" layout-fill>
-            <span flex="5"></span>
-            <p style="font-size:1.1em;text-align:center">Bikes</p>
-                   <span flex="15"></span>
-                   <p style="font-size:1.1em">Docks</p>
-                 </div>
-          <div layout="row" layout-fill>
-            <span flex="5"></span>
-            <md-button style="padding-left:8px" class="md-fab md-mini md-primary" aria-label="Eat cake">
-              <span style="padding-left:5px">{{station.properties.bikesAvailable}}</span>
-            </md-button>
-        <span flex="10"></span>
-        <md-button style="padding-left:8px" class="md-fab md-mini md-accent md-hue-2" aria-label="Eat cake">
-            <span style="padding-left:5px"> {{station.properties.docksAvailable}}</span>
-        </md-button>
-            <!-- <md-icon md-font-icon="icon-mode_comment"
-                   ng-style="{'font-size': '24px', height: '24px'}"
-                   ng-class="md-accent"
-                   ng-click="ul.test($event)"
-                   alt="print"></md-icon>
-                   <span flex="25"></span>
-                   <md-icon md-font-icon="icon-mode_comment"
-                   ng-style="{'font-size': '24px', height: '24px'}"
-                   ng-class="md-accent"
-                   ng-click="ul.test($event)"
-                   alt="print"></md-icon> -->
-                 </div>
-        </div>
-  </md-list-item>
+      
+      <!-- Docking Stations near you container
+      ============================================== -->
+      <aside layout="column" class="layout-columns" style="padding:1.2em;">
+        
+        <md-content layout="column" style="background:transparent;display:table-cell;margin:8px 8px;" layout-fill>
+          <md-list layout-fill style="padding:0">
+          
+          <md-subheader class="md-no-sticky md-whiteframe-z1 controller-container-header" style="margin:0 0 0.5em 0">Indego Stations Near You<span> | </span><em>Find the nearest station</em></md-subheader>
 
+          <md-list-item class="md-3-line md-no-sticky" data-ng-repeat="station in selectedItems" layout-fill>
 
+            <div layout-padding class="indego-status-info">
+              <br>{{station.properties.name}}<br>
+              <small><strong>Station ID:</strong> {{station.properties.kioskId}}</small><br>
+            </div>
+            
+            <div class="md-list-item-text">
 
-  <!-- Docking Stations near you container
-  ============================================== -->
-  <md-list-item layout-fill class="md-3-line md-no-sticky md-whiteframe-z1 indego-status-container" data-ng-repeat="station in sortedIndego">
+              <div layout="row" layout-fill>
+                <p class="indego-status-title-bikes">Bikes</p>
+                <p class="indego-status-title-docks">Docks</p>
+              </div>
+
+              <div layout="row" layout-fill>
+                <md-button class="md-fab md-mini md-primary bikes-circle-btn" aria-label="Eat cake" data-station-popup="bikes">
+                  {{station.properties.bikesAvailable}}
+                </md-button><!-- total-number-of-bikes-btn -->
+                <md-button class="md-fab md-mini md-accent md-hue-2 docks-circle-btn" aria-label="Eat cake" data-station-popup="docks">
+                  {{station.properties.docksAvailable}}
+                </md-button><!-- total-number-of-docks-btn -->
+              </div>
+            
+            </div>
+
+          </md-list-item>
+
+          <md-list-item layout-fill class="md-3-line md-no-sticky md-whiteframe-z1 indego-status-container" data-ng-repeat="station in sortedIndego">
     
-     <div layout-padding class="indego-status-info">
-       <br>{{station.properties.name}}<br>
-       <small><strong>Station ID:</strong> {{station.properties.kioskId}}</small><br>
-       <small>{{station.distance}}m away</small><br>
-     </div>
+             <div layout-padding class="indego-status-info">
+               <br>{{station.properties.name}}<br>
+               <small><strong>Station ID:</strong> {{station.properties.kioskId}}</small><br>
+               <small>{{station.distance}}m away</small><br>
+             </div>
 
-     <div class="md-list-item-text">
+             <div class="md-list-item-text">
 
-       <div layout="row" layout-fill>
-         <p class="indego-status-title-bikes">Bikes</p>
-         <p class="indego-status-title-docks">Docks</p>
-       </div>
+               <div layout="row" layout-fill>
+                 <p class="indego-status-title-bikes">Bikes</p>
+                 <p class="indego-status-title-docks">Docks</p>
+               </div>
     
-     <div layout="row" layout-fill>
-       <md-button class="md-fab md-mini md-primary bikes-circle-btn" aria-label="Eat cake" data-station-popup="bikes">
-         {{station.properties.bikesAvailable}}
-       </md-button><!-- total-number-of-bikes-btn -->
-       <md-button class="md-fab md-mini md-accent md-hue-2 docks-circle-btn" aria-label="Eat cake" data-station-popup="docks">
-         {{station.properties.docksAvailable}}
-       </md-button><!-- total-number-of-docks-btn -->
-     </div>
+               <div layout="row" layout-fill>
+                 <md-button class="md-fab md-mini md-primary bikes-circle-btn" aria-label="Eat cake" data-station-popup="bikes">
+                   {{station.properties.bikesAvailable}}
+                 </md-button><!-- total-number-of-bikes-btn -->
+                 <md-button class="md-fab md-mini md-accent md-hue-2 docks-circle-btn" aria-label="Eat cake" data-station-popup="docks">
+                   {{station.properties.docksAvailable}}
+                 </md-button><!-- total-number-of-docks-btn -->
+               </div>
+             
+             </div>
+           
+           </md-list-item>
+           
+           <md-list-item flex class="md-3-line md-no-sticky md-whiteframe-z1 indego-status-popup-container" data-ng-repeat="station in sortedIndego" layout-fill>
+             <div layout="row" layout-fill>
+               <header><h3>{{station.properties.name}}</h3></header>
+               <article role="article"><section>
+                 <p class="indego-station-details">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed elementum magna nec dolor elementum, in posuere risus ultrices. Duis id tellus ac lectus malesuada suscipit quis non massa. Donec eleifend rutrum dolor sed dictum. Vestibulum eget nibh sollicitudin, maximus diam id, aliquet mi. Nullam ornare purus at sapien finibus ullamcorper ut in mi. Sed eu eleifend diam, id tempus nisi. Praesent rutrum magna eget hendrerit varius. Curabitur id tincidunt enim. Nunc eu est rhoncus, ullamcorper nisi quis, consequat augue. Cras vitae libero id diam tempor convallis.</p>
+               </section></article>
+             </div>
+           </md-list-item>
 
+           </md-list>
+        </md-content>
+        
+      </aside>
+      
+      
+      <!-- Main Mapping Content
+      ============================================== -->
+      <main role="main" layout="column" class="layout-columns">
+        
+        <div class="md-whiteframe-z1" layout="column" id="map-canvas"></div>
+        
+        <div class="lock-size" layout="row" layout-align="center center"><md-fab-speed-dial md-open="false" md-direction="up" data-ng-class="md-fling"><md-button aria-label="menu" class="md-fab md-warn" data-record-mytrip><md-icon md-font-icon="icon-timer" data-ng-style="{color: ul.weather.icon.color,height:'30px','font-size':'30px' }" data-ng-class="md-warn" alt="weather Icon" class="step"></md-icon></md-button></md-fab-speed-dial></div>
+        
+      </main>
     </div>
-
-  </md-list-item>
- </md-list>
-
-
-  <div flex class="md-3-line md-whiteframe-z1 indego-status-popup-container">
-    <header><h3>{{station.properties.name}}</h3></header>
-    <article role="article"><section>
-      <p class="indego-station-details">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed elementum magna nec dolor elementum, in posuere risus ultrices. Duis id tellus ac lectus malesuada suscipit quis non massa. Donec eleifend rutrum dolor sed dictum. Vestibulum eget nibh sollicitudin, maximus diam id, aliquet mi. Nullam ornare purus at sapien finibus ullamcorper ut in mi. Sed eu eleifend diam, id tempus nisi. Praesent rutrum magna eget hendrerit varius. Curabitur id tincidunt enim. Nunc eu est rhoncus, ullamcorper nisi quis, consequat augue. Cras vitae libero id diam tempor convallis.</p>
-    </section></article>
-  </div>
-
-  </md-content>
-
-
-
-  <div id="map-canvas"></div>
-
-  </div>
-  
-  <div class="lock-size" layout="row" layout-align="center center">
-    <md-fab-speed-dial md-open="false" md-direction="up" data-ng-class="md-fling">
-      <md-button aria-label="menu" class="md-fab md-warn" data-record-mytrip>
-        <md-icon md-font-icon="icon-timer" data-ng-style="{color: ul.weather.icon.color,height:'30px','font-size':'30px' }" data-ng-class="md-warn" alt="weather Icon" class="step"></md-icon>
-      </md-button>  
-    </md-fab-speed-dial>
-  </div>
-
-
-
-
-
+    
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBfdI61qNxrgQ2qqXXyIKjMbRdi19HkjtY&libraries=places"></script>
+    <script src="//maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBfdI61qNxrgQ2qqXXyIKjMbRdi19HkjtY&libraries=places"></script>
 
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
@@ -261,7 +209,6 @@
     <script src="//ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.js"></script>
     <script src="//cdn.firebase.com/js/client/2.1.2/firebase.js"></script>
 
-    <!-- AngularFire -->
     <script src="//cdn.firebase.com/libs/angularfire/1.0.0/angularfire.min.js"></script>
     <script src="//cdn.jsdelivr.net/rsvp/3.0.6/rsvp.js"></script>
     <script src="//cdn.firebase.com/libs/geofire/3.2.2/geofire.min.js"></script>
@@ -273,75 +220,73 @@
     <script src="./src/users/Users.js"></script>
     <script src="./src/users/mapController.js"></script>
     <script src="./src/users/UserService.js"></script>
-
-    <script type="text/javascript">
-
-          angular
-              .module('starterApp', ['ngMaterial', 'users','firebase'])
-              .config(function($mdThemingProvider, $mdIconProvider){
-
-                  $mdIconProvider
-                      .defaultIconSet("./assets/svg/avatars.svg", 128)
-                      .icon("menu"       , "./assets/svg/menu.svg"        , 24)
-                      .icon("share"      , "./assets/svg/share.svg"       , 24)
-                      .icon("google_plus", "./assets/svg/google_plus.svg" , 512)
-                      .icon("phone"      , "./assets/svg/phone.svg"       , 512);
-
-                      $mdThemingProvider.definePalette('amazingPaletteName', {
-    '50': 'ffebee',
-    '100': 'ffcdd2',
-    '200': 'ef9a9a',
-    '300': 'e57373',
-    '400': 'ef5350',
-    '500': 'f44336',
-    '600': '00ff00',
-    '700': 'd32f2f',
-    '800': 'c62828',
-    '900': '1A237E',
-    'A100': 'ff8a80',
-    'A200': 'ff5252',
-    'A400': 'ff1744',
-    'A700': 'd50000',
-    'contrastDefaultColor': 'light',    // whether, by default, text (contrast)
-                                        // on this palette should be dark or light
-    'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
-     '200', '300', '400', 'A100'],
-    'contrastLightColors': undefined    // could also specify this if default was 'dark'
-  });
-                      $mdThemingProvider.theme('default')
-                          .primaryPalette('amazingPaletteName', {
-                            'default': '900', // by default use shade 400 from the pink palette for primary intentions
-                            'hue-1': '100', // use shade 100 for the <code>md-hue-1</code> class
-                            'hue-2': '600', // use shade 600 for the <code>md-hue-2</code> class
-                            'hue-3': 'A100' // use shade A100 for the <code>md-hue-3</code> class
-                          })
-                          .accentPalette('grey',{
-                            'default': '900', // by default use shade 400 from the pink palette for primary intentions
-                            'hue-1': '100', // use shade 100 for the <code>md-hue-1</code> class
-                            'hue-2': '600', // use shade 600 for the <code>md-hue-2</code> class
-                            'hue-3': 'A100' // use shade A100 for the <code>md-hue-3</code> class
-                          });
-
-                       $mdThemingProvider.theme('green')
-                          .primaryPalette('light-green', {
-                            'default': '600', // by default use shade 400 from the pink palette for primary intentions
-                            'hue-1': '100', // use shade 100 for the <code>md-hue-1</code> class
-                            'hue-2': '600', // use shade 600 for the <code>md-hue-2</code> class
-                            'hue-3': 'A100' // use shade A100 for the <code>md-hue-3</code> class
-                          })
-                          .accentPalette('grey',{
-                            'default': '900', // by default use shade 400 from the pink palette for primary intentions
-                            'hue-1': '100', // use shade 100 for the <code>md-hue-1</code> class
-                            'hue-2': '600', // use shade 600 for the <code>md-hue-2</code> class
-                            'hue-3': 'A100' // use shade A100 for the <code>md-hue-3</code> class
-                          });
-
-              });
-
-    </script>
-              
+    
     <script src="./assets/js/refresh.js" defer></script>
     <script src="./assets/js/indego-status-btn.js" defer></script>
     <script src="./assets/js/mytrip.js" defer></script>
+    
+    <script>
+    /* <![CDATA[ */
+      angular.module('starterApp', ['ngMaterial', 'users','firebase'])
+        .config(function($mdThemingProvider, $mdIconProvider){
+
+        $mdIconProvider.defaultIconSet("./assets/svg/avatars.svg", 128)
+          .icon("menu"       , "./assets/svg/menu.svg"        , 24)
+          .icon("share"      , "./assets/svg/share.svg"       , 24)
+          .icon("google_plus", "./assets/svg/google_plus.svg" , 512)
+          .icon("phone"      , "./assets/svg/phone.svg"       , 512);
+          
+        $mdThemingProvider.definePalette('amazingPaletteName', {
+          '50': 'ffebee',
+          '100': 'ffcdd2',
+          '200': 'ef9a9a',
+          '300': 'e57373',
+          '400': 'ef5350',
+          '500': 'f44336',
+          '600': '00ff00',
+          '700': 'd32f2f',
+          '800': 'c62828',
+          '900': '1A237E',
+          'A100': 'ff8a80',
+          'A200': 'ff5252',
+          'A400': 'ff1744',
+          'A700': 'd50000',
+          'contrastDefaultColor': 'light',    // whether, by default, text (contrast)
+                                              // on this palette should be dark or light
+          'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
+          '200', '300', '400', 'A100'],
+          'contrastLightColors': undefined    // could also specify this if default was 'dark'
+        });
+        
+        $mdThemingProvider.theme('default')
+          .primaryPalette('amazingPaletteName', {
+            'default': '900', // by default use shade 400 from the pink palette for primary intentions
+            'hue-1': '100',   // use shade 100 for the <code>md-hue-1</code> class
+            'hue-2': '600',   // use shade 600 for the <code>md-hue-2</code> class
+            'hue-3': 'A100'   // use shade A100 for the <code>md-hue-3</code> class
+          })
+          .accentPalette('grey',{
+            'default': '900', // by default use shade 400 from the pink palette for primary intentions
+            'hue-1': '100',   // use shade 100 for the <code>md-hue-1</code> class
+            'hue-2': '600',   // use shade 600 for the <code>md-hue-2</code> class
+            'hue-3': 'A100'   // use shade A100 for the <code>md-hue-3</code> class
+          });
+          
+          $mdThemingProvider.theme('green')
+            .primaryPalette('light-green', {
+              'default': '600', // by default use shade 400 from the pink palette for primary intentions
+              'hue-1': '100',   // use shade 100 for the <code>md-hue-1</code> class
+              'hue-2': '600',   // use shade 600 for the <code>md-hue-2</code> class
+              'hue-3': 'A100'   // use shade A100 for the <code>md-hue-3</code> class
+            })
+            .accentPalette('grey',{
+              'default': '900', // by default use shade 400 from the pink palette for primary intentions
+              'hue-1': '100',   // use shade 100 for the <code>md-hue-1</code> class
+              'hue-2': '600',   // use shade 600 for the <code>md-hue-2</code> class
+              'hue-3': 'A100'   // use shade A100 for the <code>md-hue-3</code> class
+            });
+        });
+      /* ]]> */
+      </script>
   </body>
 </html>
