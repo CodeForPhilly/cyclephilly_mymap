@@ -49,32 +49,36 @@
       ============================================== -->
       <aside layout="column" class="layout-columns" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
 
-        <header role="banner" class="nav-header md-whiteframe-z1" layout="column" layout-align="center center" layout-padding><div class="logo-container"><figure class="logo" id="logo"></figure></div><h1 class="logo-h1 md-heading">CyclePhilly</h1><div layout="row"><md-icon md-font-icon="{{ul.weather.icon.name}}" data-ng-style="{color: ul.weather.icon.color}" data-ng-class="md-warn" alt="weather Icon" class="step"></md-icon><section class="logo-temp-wrapper"><p><span>{{ul.weather.temperature}}</span><span>&deg;</span></p></section></div></header>
+        <header role="banner" class="nav-header default-border-radius default-box-shadow" layout="column" layout-align="center center" layout-padding><div class="logo-container"><figure class="logo" id="logo"></figure></div><h1 class="logo-h1 md-heading">CyclePhilly</h1><div layout="row"><md-icon md-font-icon="{{ul.weather.icon.name}}" data-ng-style="{color: ul.weather.icon.color}" data-ng-class="md-warn" alt="weather Icon" class="step"></md-icon><section class="logo-temp-wrapper"><p><span>{{ul.weather.temperature}}</span><span>&deg;</span></p></section></div></header>
         
-        <md-subheader class="md-no-sticky md-whiteframe-z1 controller-container-header">Bike Layers<span> | </span><em>Turn layers on and off</em></md-subheader>
+        <div class="default-section-divider"><hr></div>
         
-        <div class="md-whiteframe-z1 map-controller-container" layout="column">
+        <md-subheader class="md-no-sticky default-border-radius default-box-shadow controller-container-header">Bike Layers<span> | </span><em>Turn layers on and off</em></md-subheader>
+        
+        <div class="default-border-radius default-box-shadow map-controller-container" layout="column">
 
-          <md-list-item style="border-bottom:1px dotted rgba(165,165,165,.45);width:100%">
+          <md-list-item style="border-bottom:1px solid rgba(205,205,205,.25);width:100%">
             <md-switch data-ng-change="ul.toggleRoutes(ul.layers.routes.enabled)" data-ng-model="ul.layers.indego.enabled" class="md-primary"></md-switch>
-            <md-icon class="map-controller-icon" md-svg-icon="{{ul.layers.indego.icon}}"></md-icon>
-            <p class="map-controller-title">{{ul.layers.indego.name}}</p>
+            <figure class="map-controller-icon"><i class="map-controller-trail-icon"></i></figure>
+            <label class="map-controller-title">{{ul.layers.indego.name}}</label>
           </md-list-item>
           
-          <md-list-item style="border-bottom:1px dotted rgba(165,165,165,.45);width:100%">
+          <md-list-item style="border-bottom:1px solid rgba(205,205,205,.25);width:100%">
             <md-switch data-ng-change="ul.toggleRoutes(ul.layers.routes.enabled)" data-ng-model="ul.layers.routes.enabled" class="md-primary md-hue-2"></md-switch>
-            <md-icon class="map-controller-icon" md-svg-icon="{{ul.layers.routes.icon}}"></md-icon>
-            <p class="map-controller-title">{{ul.layers.routes.name}}</p>
+            <figure class="map-controller-icon"><i class="map-controller-bike-icon"></i></figure>
+            <label class="map-controller-title">{{ul.layers.routes.name}}</label>
           </md-list-item>
 
           <md-list-item style="width:100%">
             <md-switch data-ng-change="ul.onRackSwitch(ul.layers.racks.enabled)" data-ng-model="ul.layers.racks.enabled" class="md-accent"></md-switch>
-            <md-icon class="map-controller-icon" md-svg-icon="{{ul.layers.racks.icon}}"></md-icon>
-            <p class="map-controller-title">{{ul.layers.racks.name}}</p>
+            <figure class="map-controller-icon map-controller-rack-icon"></figure>
+            <label class="map-controller-title">{{ul.layers.racks.name}}</label>
           </md-list-item>
         </div>
         
-        <md-subheader class="md-no-sticky md-whiteframe-z1 controller-container-header">My Trips<span> | </span><em>Record and share trips</em></md-subheader>
+        <div class="default-section-divider"><hr></div>
+        
+        <md-subheader class="md-no-sticky default-border-radius default-box-shadow controller-container-header">My Trips<span> | </span><em>Record and share trips</em></md-subheader>
         
         <div class="md-whiteframe-z1 trip-controller-container" layout="column">
           
@@ -116,7 +120,7 @@
         <md-content layout="column" style="background:transparent;display:table-cell;margin:8px 8px;" layout-fill>
           <md-list layout-fill style="padding:0">
           
-          <md-subheader class="md-no-sticky md-whiteframe-z1 controller-container-header" style="margin:0 0 0.5em 0">Indego Stations Near You<span> | </span><em>Find the nearest station</em></md-subheader>
+          <md-subheader class="md-no-sticky default-border-radius default-box-shadow controller-container-header" style="margin:0 0 0.5em 0">Indego Stations Near You<span> | </span><em>Find the nearest station</em></md-subheader>
 
           <md-list-item class="md-3-line md-no-sticky" data-ng-repeat="station in selectedItems" layout-fill>
 
@@ -221,9 +225,7 @@
     <script src="./src/users/mapController.js"></script>
     <script src="./src/users/UserService.js"></script>
     
-    <script src="./assets/js/refresh.js" defer></script>
-    <script src="./assets/js/indego-status-btn.js" defer></script>
-    <script src="./assets/js/mytrip.js" defer></script>
+    <script src="./assets/js/masterCtrl.js" defer></script>
     
     <script>
     /* <![CDATA[ */
