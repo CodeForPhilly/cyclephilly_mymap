@@ -5,7 +5,32 @@
        .controller('UserController', [
           'userService', '$mdSidenav', '$mdToast','$mdBottomSheet', '$log', '$q','$rootScope','$scope','$firebaseArray','$firebaseObject','$http',
           UserController
-       ]);
+       ])
+       .filter('getIcon', function() {
+        return function(input) {
+          if(input !== undefined){
+            var icons = [
+            {'icon':'clear-day','wicon':'icon-sun'},
+            {'icon':'clear-night','wicon':'icon-moon'},
+            {'icon':'rain','wicon':'icon-rainy2'},
+            {'icon':'snow','wicon':'icon-snowy2'},
+            {'icon':'sleet','wicon':'icon-weather4'},
+            {'icon':'wind','wicon':'icon-windy4'},
+            {'icon':'fog','wicon':'icon-'},
+            {'icon':'cloudy','wicon':'icon-'},
+            {'icon':'partly-cloudy-day','wicon':'icon-cloudy'},
+            {'icon':'partly-cloudy-night','wicon':'icon-cloud'},
+            {'icon':'thunderstorm','wicon':'icon-cloud3'},
+            {'icon':''}]
+            var index = _.findLastIndex(icons, function(chr) {
+
+              return chr.icon == input;
+            });
+            return icons[index].wicon;
+          }
+          
+        }
+    });;
 
   /**
    * Main Controller for the Angular Material Starter App
@@ -18,7 +43,6 @@
     var self = this;
     self.currentWeatherIcon="icon-looks_5";
     self.mapLoading = true;
-    self.weather = {};
     self.ref = new Firebase("https://phl.firebaseio.com");
     self.bikeFire = new GeoFire(self.ref.child("indego").child('_geofire'));
     self.racksFire = new GeoFire(self.ref.child("racks").child('_geofire'));
@@ -27,7 +51,8 @@
     self.user={};
     self.bikshareKiosks = [];
     self.selectedItems = [];
-    self.navIcon1 = "icon-directions_bike"
+    self.navIcon1 = "icon-directions_bike";
+    self.weather = {};
     self.IsActive = true;
     self.sortedIndego = [];
     self.bikeShares = [];
