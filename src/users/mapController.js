@@ -736,9 +736,9 @@ self.bikeNetwork = new google.maps.FusionTablesLayer({
     
 
     self.layers={
-    indego:{name:"Ride Indego",enabled:true,color:"md-primary"},
-    racks:{name:"Bike Racks",enabled:false,color:"md-accent"},
-    routes:{name:"Bike Routes",enabled:true,color:"md-primary md-hue-2"},
+    indego:{name:"Ride Indego",enabled:true,color:"md-primary",icon:"./assets/svg/trail.svg"},
+    routes:{name:"Bike Routes",enabled:true,color:"md-primary md-hue-2",icon:"./assets/svg/bike.svg"},
+    racks:{name:"Bike Racks",enabled:false,color:"md-accent",icon:"./assets/svg/rack.svg"},
     }
 
     self.removeRacks = function(){
